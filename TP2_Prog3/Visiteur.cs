@@ -8,5 +8,13 @@ namespace TP2_Prog3
 {
     internal class Visiteur
     {
+        /*
+         * À mon avis, l'historique devrait être conservé dans une List<string>
+         * 
+         */
+
+        private string _nom;
+
+        List<string> historique;
     }
 }
