@@ -15,7 +15,8 @@ namespace TP2_Prog3
         private int _capacity;
 
         // Type d'attraction -> Dictionnary? TODO!!!!!
-
+        // Mouhammad : oui  Je pense que c'est un dictionnary !!!!
+        // ex: <char symbole, string typeAttraction>
         
 
         public Attraction(int ID, string Nom, int Capacity)
