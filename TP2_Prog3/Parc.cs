@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TP2_Prog3
 {
-    internal class Parc
+    public class Parc
     {
         Dictionary<int, Attraction> _attractions = new Dictionary<int, Attraction>();
         /* 

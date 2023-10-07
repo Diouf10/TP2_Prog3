@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace TP2_Prog3
 {
-    internal class Map
+    public class Map
     {
+        
+
+
     }
 }

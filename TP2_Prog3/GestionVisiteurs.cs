@@ -16,8 +16,24 @@ namespace TP2_Prog3
      * conservés dans une Queue (premier arrivé, premier sorti.)
      */
 
+    public class GestionVisiteurs
+    { 
+        public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
+        {
+            
+        }
+        public void EntrerVisiteurDansAttraction(string attractionId)
+        {
 
-    internal class GestionVisiteurs
-    {
+        }
+        public void EntrerVisiteurDansParc(Visiteur visiteur)
+        {
+
+        }
+        public void SortirVisiteurDuParc(Visiteur visiteur)
+        {
+
+        }
+
     }
 }

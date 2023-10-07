@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TP2_Prog3
 {
-    internal class Attraction
+    public class Attraction
     {
         private int _ID;
         private string _nom;
@@ -15,6 +15,8 @@ namespace TP2_Prog3
         private int _capacity;
 
         // Type d'attraction -> Dictionnary? TODO!!!!!
+
+        
 
         public Attraction(int ID, string Nom, int Capacity)
         {
