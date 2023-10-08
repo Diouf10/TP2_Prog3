@@ -18,6 +18,8 @@ namespace TP2_Prog3
          *      un système de clé.
          *      
          * Bonus - La générécité faciliterait beaucoup le codage de la classe.
+         * 
+         * - Alexandre Lavoie
          */
         
         public Parc() 

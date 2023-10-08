@@ -1,0 +1,7 @@
+M0001;S;Manège 1;4
+M0002;I;Manège 2;4
+M0003;I;Manège 2;4
+R0001;R;Restaurant 1;4
+R0002;R;Restaurant 2;4
+T0001;T;Toilette 1;4
+T0002;T;Toilette 2;4

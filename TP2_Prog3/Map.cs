@@ -1,4 +1,6 @@
 ﻿
+using System.Text;
+
 namespace TP2_Prog3
 {
     /*
@@ -13,11 +15,57 @@ namespace TP2_Prog3
      * Vu que nous créons notre array une fois et celle-ci ne changera pas de capacité, celui-ci
      * ne prendra pas beaucoup de place en mémoire et sera donc efficace pour les besoins de la
      * map.
+     * 
+     * - Mouhammad Wagan Diouf
+     */
+
+    /*
+     * Pour l'import de la map il nous faudra aussi un stringbuilder, car celui-ci fonctionne de la même façon,
+     * ça nous éviterait de trop resizer l'array grâce à l'espace disponible d'avance.
      */
     public class Map
     {
-        
 
 
+
+        public Map()
+        {
+            ImporterMapDeFichier(@"../../../map.txt", out int longueur, out int largeur);
+        }
+
+        public void ImporterMapDeFichier(string chemin, out int longueur, out int largeur)
+        {
+            var fichier = File.OpenRead(chemin); // FileStream?
+
+            BinaryReader br = new BinaryReader(fichier);
+
+            string information = br.ReadString();
+            Console.WriteLine(information);
+            
+            information = br.ReadString();
+            Console.WriteLine(information);
+
+            information = br.ReadString();
+            Console.WriteLine(information);
+
+            information = br.ReadString();
+            Console.WriteLine(information);
+
+            information = br.ReadString();
+            Console.WriteLine(information);
+
+            information = br.ReadString();
+            Console.WriteLine(information);
+
+            information = br.ReadString();
+            Console.WriteLine(information);
+
+
+            longueur = 1;
+            largeur = 1;
+
+
+
+        }
     }
 }

@@ -11,6 +11,9 @@ namespace TP2_Prog3
         /*
          * À mon avis, l'historique devrait être conservé dans une List<string>
          * 
+         * (explication à faire Alex.)
+         * 
+         * - Alexandre Lavoie
          */
 
         /// <summary>
