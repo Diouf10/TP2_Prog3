@@ -24,6 +24,15 @@ namespace TP2_Prog3
         private List<string> _historique;
 
         /// <summary>
+        /// Constructeur de la classe Visiteur
+        /// </summary>
+        /// <param name="Nom">Le nom du visiteur</param>
+        public Visiteur(string Nom)
+        {
+            _nom = Nom;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="action"></param>

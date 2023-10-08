@@ -17,14 +17,15 @@ namespace TP2_Prog3
      */
 
     public class GestionVisiteurs
-    { 
+    {
+        private Queue<Visiteur> _visiteursFilesDAttentes;
         public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
         {
             
         }
         public void EntrerVisiteurDansAttraction(string attractionId)
         {
-
+            
         }
         public void EntrerVisiteurDansParc(Visiteur visiteur)
         {
