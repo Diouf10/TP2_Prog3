@@ -30,40 +30,96 @@ namespace TP2_Prog3
 
         public Map()
         {
-            ImporterMapDeFichier(@"../../../map.txt", out int longueur, out int largeur);
+            ImporterMapDeFichier(@"../../../map.txt", out Attraction[,] attractions);
         }
 
-        public void ImporterMapDeFichier(string chemin, out int longueur, out int largeur)
+        public void ImporterMapDeFichier(string chemin, out Attraction[,] attractions)
         {
+            int longueur = 1;
+            int largeur = 1;
+
+            string[] lines = File.ReadAllLines(chemin);
+
+            Console.WriteLine(lines[0]);
+
+            string strLongueur = "";
+            string strLargeur = "";
+
+            int i = 0;
+            
+            string strTemp = string.Empty;
+
+            for(; i < lines[0].Length; i++)
+            {
+                if (char.IsDigit(lines[0][i]))
+                {
+                    strLongueur += lines[0][i];
+
+                }
+                else
+                    break;
+            }
+            
+            for (; i < lines[0].Length; i++)
+            {
+                if (char.IsDigit(lines[0][i]))
+                {
+                    strLargeur += lines[0][i];
+
+                }
+            }
+
+
+            longueur = Convert.ToInt32(strLongueur);
+            largeur = Convert.ToInt32(strLargeur);
+
+            Console.WriteLine($"{longueur} .. {largeur}");
+
+
+            attractions =  new Attraction[longueur, largeur];
+
+
+            
+            
+            
+            
+            /*
             var fichier = File.OpenRead(chemin); // FileStream?
 
             BinaryReader br = new BinaryReader(fichier);
 
-            string information = br.ReadString();
-            Console.WriteLine(information);
+            br.BaseStream.Position = 0;
+            string mesures = br.ReadString();
             
-            information = br.ReadString();
-            Console.WriteLine(information);
+            Console.WriteLine(mesures + "\n");
 
-            information = br.ReadString();
-            Console.WriteLine(information);
+            int i = 0;
 
-            information = br.ReadString();
-            Console.WriteLine(information);
+            string strLongueur = "";
+            string strLargeur = "";
 
-            information = br.ReadString();
-            Console.WriteLine(information);
+            for (; mesures[i] != ';'; i++) 
+            {
+                strLongueur += mesures[i];
+            }
 
-            information = br.ReadString();
-            Console.WriteLine(information);
+            i++;
+            longueur = Convert.ToInt32(strLongueur);
 
-            information = br.ReadString();
-            Console.WriteLine(information);
+            for (; mesures[i] != '\n'; i++)
+            {
+                strLargeur += mesures[i];
+            }
+
+            largeur = Convert.ToInt32(strLargeur);
 
 
-            longueur = 1;
-            largeur = 1;
-
+            for (; i < longueur * largeur; i++)
+            {
+                string information = br.ReadString();
+                Console.Write(information);
+            }
+            */
 
 
         }
