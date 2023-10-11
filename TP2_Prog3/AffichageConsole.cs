@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace TP2_Prog3
 {
-    public class AffichageConsole
+    public static class AffichageConsole
     {
-        public void Afficher(Parc parc, Map map, GestionVisiteurs gestionVisiteurs)
+        public static void Afficher(Parc parc, Map map, GestionVisiteurs gestionVisiteurs)
         {
 
 
         }
 
-        public void AfficherHistoriqueVisiteur(Visiteur visiteur)
+        public static void AfficherHistoriqueVisiteur(Visiteur visiteur)
         {
             
         }

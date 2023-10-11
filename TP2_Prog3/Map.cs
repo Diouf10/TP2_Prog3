@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using System.Text;
 
 namespace TP2_Prog3
@@ -25,20 +26,15 @@ namespace TP2_Prog3
      */
     public class Map
     {
+        int longueur;
+        int largeur;
 
-
+        Hashtable _emplacementAttractions = new Hashtable();
 
         public Map()
         {
-            ImporterMapDeFichier(@"../../../map.txt", out Attraction[,] attractions);
-        }
 
-        public void ImporterMapDeFichier(string chemin, out Attraction[,] attractions)
-        {
-            int longueur = 1;
-            int largeur = 1;
-
-            string[] lines = File.ReadAllLines(chemin);
+            string[] lines = File.ReadAllLines(@"../../../map.txt");
 
             Console.WriteLine(lines[0]);
 
@@ -46,10 +42,10 @@ namespace TP2_Prog3
             string strLargeur = "";
 
             int i = 0;
-            
+
             string strTemp = string.Empty;
 
-            for(; i < lines[0].Length; i++)
+            for (; i < lines[0].Length; i++)
             {
                 if (char.IsDigit(lines[0][i]))
                 {
@@ -59,7 +55,70 @@ namespace TP2_Prog3
                 else
                     break;
             }
-            
+
+            for (; i < lines[0].Length; i++)
+            {
+                if (char.IsDigit(lines[0][i]))
+                {
+                    strLargeur += lines[0][i];
+
+                }
+            }
+
+
+            longueur = Convert.ToInt32(strLongueur);
+            largeur = Convert.ToInt32(strLargeur);
+
+            Console.WriteLine($"{longueur} .. {largeur}");
+
+            for (int j = 0; i < largeur; i++)
+            {
+                StringBuilder sb = new();
+
+                List<((int posX, int posY), string)> liste = new();
+
+                int posX = 0;
+
+                for (int k = 0; k < largeur; k++)
+                {
+                    if (lines[j][k] == ' ' && lines[j][k + 2] == ' ')
+                    {
+                        posX++;
+                        liste.Add(((posX, j), sb.ToString()));
+                    }
+                    else
+                    {
+                        sb.Append(lines[j][k]);
+                    }
+                }
+            }
+        }
+
+        // OLD 
+        public void ImporterMapDeFichier(string chemin, out Attraction[,] attractions)
+        {
+            string[] lines = File.ReadAllLines(@"../../../map.txt");
+
+            Console.WriteLine(lines[0]);
+
+            string strLongueur = "";
+            string strLargeur = "";
+
+            int i = 0;
+
+            string strTemp = string.Empty;
+
+            for (; i < lines[0].Length; i++)
+            {
+                if (char.IsDigit(lines[0][i]))
+                {
+                    strLongueur += lines[0][i];
+
+                }
+                else
+                    break;
+            }
+
             for (; i < lines[0].Length; i++)
             {
                 if (char.IsDigit(lines[0][i]))
@@ -76,13 +135,14 @@ namespace TP2_Prog3
             Console.WriteLine($"{longueur} .. {largeur}");
 
 
-            attractions =  new Attraction[longueur, largeur];
+            attractions = new Attraction[longueur, largeur];
 
 
-            
-            
-            
-            
+
+
+
+
+
             /*
             var fichier = File.OpenRead(chemin); // FileStream?
 

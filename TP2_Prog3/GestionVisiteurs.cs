@@ -19,6 +19,12 @@ namespace TP2_Prog3
     public class GestionVisiteurs
     {
         private Queue<Visiteur> _visiteursFilesDAttentes;
+
+        public GestionVisiteurs(Parc Parc) 
+        {
+
+        }
+
         public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
         {
             
