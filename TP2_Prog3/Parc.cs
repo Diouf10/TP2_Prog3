@@ -31,44 +31,40 @@ namespace TP2_Prog3
                 int i = 0;
 
                 StringBuilder ID = new();
-
-                for (; i < line.Length; i++) // ID Attraction
+                 
+                for (; i < line.Length && line[i] != ';'; i++) // ID Attraction
                 {
                     ID.Append(line[i]);
                 }
 
-                char type = line[i];
-
                 i++;
 
-                for (; i < line.Length; i++) // Type Attraction
-                {
-                    type = line[i];
-                }
+                char type = line[i]; // C'est bon!!!
+
+                i += 2;
 
                 StringBuilder nom = new();
 
-                for (; i < line.Length; i++) // Nom Attraction
+                for (; i < line.Length && line[i] != ';'    ; i++) // Nom Attraction
                 {
                     nom.Append(line[i]);
                 }
 
-                int capacity = 1;
+                StringBuilder strCapacity = new();
 
                 for (; i < line.Length; i++) // Capacité Attraction
                 {
                     if (char.IsDigit(line[i]))
                     {
-
+                        strCapacity.Append(line[i]);
                     }
                 }
 
-
                 Attraction attraction = new Attraction(
-                    ID.ToString(), nom.ToString(), Convert.ToInt32(capacity), type) ;
+                    ID.ToString(), nom.ToString(), Convert.ToInt32(strCapacity.ToString()), type) ;
 
+                _attractions.Add(ID.ToString() ,attraction);  
 
-                _attractions.Add(ID.ToString() ,attraction);              
             }
         }
 

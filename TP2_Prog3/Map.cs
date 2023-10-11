@@ -29,7 +29,7 @@ namespace TP2_Prog3
         int longueur;
         int largeur;
 
-        Hashtable _emplacementAttractions = new Hashtable();
+        Attraction?[,] _emplacementAttractions;
 
         public Map()
         {
@@ -69,9 +69,11 @@ namespace TP2_Prog3
             longueur = Convert.ToInt32(strLongueur);
             largeur = Convert.ToInt32(strLargeur);
 
+            _emplacementAttractions = new Attraction?[longueur, largeur]; // NULLABLE!!! (À changer maybe?)
+
             Console.WriteLine($"{longueur} .. {largeur}");
 
-            for (int j = 0; i < largeur; i++)
+            for (int j = 1; j < largeur; j++)
             {
                 StringBuilder sb = new();
 
@@ -81,7 +83,7 @@ namespace TP2_Prog3
 
                 for (int k = 0; k < largeur; k++)
                 {
-                    if (lines[j][k] == ' ' && lines[j][k + 2] == ' ')
+                    if (lines[j][k] == ' ' && k + 2 < lines[j].Length && lines[j][k + 2] == ' ')
                     {
                         posX++;
                         liste.Add(((posX, j), sb.ToString()));
