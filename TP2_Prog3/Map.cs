@@ -36,7 +36,7 @@ namespace TP2_Prog3
 
             string[] lines = File.ReadAllLines(@"../../../map.txt");
 
-            Console.WriteLine(lines[0]);
+            //Console.WriteLine(lines[0]);
 
             string strLongueur = "";
             string strLargeur = "";
@@ -71,28 +71,63 @@ namespace TP2_Prog3
 
             _emplacementAttractions = new Attraction?[longueur, largeur]; // NULLABLE!!! (À changer maybe?)
 
-            Console.WriteLine($"{longueur} .. {largeur}");
+            Console.WriteLine($"{longueur} PAR {largeur}");
 
-            for (int j = 1; j < largeur; j++)
+            for (int j = 1; j <= largeur; j++)
             {
-                StringBuilder sb = new();
+                StringBuilder currentWord = new();
 
                 List<((int posX, int posY), string)> liste = new();
 
-                int posX = 0;
+                int posX = 1;
 
-                for (int k = 0; k < largeur; k++)
+                bool isSpace = false;
+
+                for (int k = 0; k < lines[j].Length; k++)
                 {
-                    if (lines[j][k] == ' ' && k + 2 < lines[j].Length && lines[j][k + 2] == ' ')
+                    if (lines[j][k] == ' ' && !isSpace)
                     {
+                        isSpace = true;
+
+                        string idAttraction = currentWord.ToString();
+
+                        bool estIDValide = false;
+
+                        foreach (char c in idAttraction)
+                        {
+                            if (char.IsLetterOrDigit(c))
+                                estIDValide = true;
+                        }
+
+                        if (estIDValide)
+                        {
+                            liste.Add(((posX, j), idAttraction));
+                        }
+                    }
+                    else if (lines[j][k] != ' ' && isSpace)
+                    {
+                        currentWord = new();
+                        currentWord.Append(lines[j][k]);
+
+                        isSpace = false;
+
                         posX++;
-                        liste.Add(((posX, j), sb.ToString()));
+
                     }
                     else
                     {
-                        sb.Append(lines[j][k]);
+                        currentWord.Append(lines[j][k]);
                     }
+
                 }
+
+                foreach(((int X, int Y) position, string id) attraction in liste )
+                {
+
+                    Console.WriteLine($"{attraction.position.X} {attraction.position.Y} {attraction.id} ");
+
+                }
+
             }
         }
 
