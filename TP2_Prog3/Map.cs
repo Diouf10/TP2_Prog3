@@ -1,5 +1,6 @@
 ﻿
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace TP2_Prog3
@@ -26,10 +27,10 @@ namespace TP2_Prog3
      */
     public class Map
     {
-        int longueur;
-        int largeur;
+        private int _longueur;
+        private int _largeur;
 
-        Attraction?[,] _emplacementAttractions;
+        private Attraction?[,] _attractions;
 
         public Map()
         {
@@ -66,14 +67,14 @@ namespace TP2_Prog3
             }
 
 
-            longueur = Convert.ToInt32(strLongueur);
-            largeur = Convert.ToInt32(strLargeur);
+            _longueur = Convert.ToInt32(strLongueur);
+            _largeur = Convert.ToInt32(strLargeur);
 
-            _emplacementAttractions = new Attraction?[longueur, largeur]; // NULLABLE!!! (À changer maybe?)
+            _attractions = new Attraction?[_longueur, _largeur]; // NULLABLE!!! (À changer maybe?)
 
-            Console.WriteLine($"{longueur} PAR {largeur}");
+            Console.WriteLine($"{_longueur} PAR {_largeur}");
 
-            for (int j = 1; j <= largeur; j++)
+            for (int j = 1; j <= _largeur; j++)
             {
                 StringBuilder currentWord = new();
 
@@ -111,7 +112,7 @@ namespace TP2_Prog3
 
                         isSpace = false;
 
-                        posX++;
+                        posX++; 
 
                     }
                     else
@@ -123,13 +124,15 @@ namespace TP2_Prog3
 
                 foreach(((int X, int Y) position, string id) attraction in liste )
                 {
-
-                    Console.WriteLine($"{attraction.position.X} {attraction.position.Y} {attraction.id} ");
-
+                    _attractions[attraction.position.Y - 1, attraction.position.X - 1] = new Attraction(attraction.id, "PlaceHolder", 4, 'T');
                 }
-
             }
         }
+
+        public int Longueur => _longueur;
+        public int Largeur => _largeur;
+
+        public Attraction?[,] Attractions => _attractions;
 
         // OLD 
         public void ImporterMapDeFichier(string chemin, out Attraction[,] attractions)
@@ -166,13 +169,13 @@ namespace TP2_Prog3
             }
 
 
-            longueur = Convert.ToInt32(strLongueur);
-            largeur = Convert.ToInt32(strLargeur);
+            _longueur = Convert.ToInt32(strLongueur);
+            _largeur = Convert.ToInt32(strLargeur);
 
-            Console.WriteLine($"{longueur} .. {largeur}");
+            Console.WriteLine($"{_longueur} .. {_largeur}");
 
 
-            attractions = new Attraction[longueur, largeur];
+            attractions = new Attraction[_longueur, _largeur];
 
 
 

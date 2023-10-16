@@ -9,13 +9,13 @@ namespace TP2_Prog3
 {
     public class Parc
     {
-        Dictionary<string, Attraction> _attractions = new Dictionary<string, Attraction>();
+        private Dictionary<string, Attraction> _attractions = new Dictionary<string, Attraction>();
         /* 
          * Pour la "liste" d'attractions, la Hash Table semblerait être un bon choix :
          * 1 - Nous ne connaîtrons pas la quantité d'attractions à l'avance, et un système de
          *      style bibliothèque conviendrait à ce critère.
-         * 2 - On pourrait facilement accéder à l'attraction via un ID, car le Dictionnary<> utilise
-         *      un système de clé.
+         * 2 - On pourrait facilement accéder à l'attraction via un ID, car la Hash Table utilise
+         *      un système de clé qui pourrait servir pour l'ID.
          *      
          * Bonus - La générécité faciliterait beaucoup le codage de la classe.
          * 
@@ -24,6 +24,7 @@ namespace TP2_Prog3
         
         public Parc() 
         {
+            
             string[] lines = File.ReadAllLines(@"../../../attractions.txt");
 
             foreach(string line in lines)
@@ -45,7 +46,7 @@ namespace TP2_Prog3
 
                 StringBuilder nom = new();
 
-                for (; i < line.Length && line[i] != ';'    ; i++) // Nom Attraction
+                for (; i < line.Length && line[i] != ';'; i++) // Nom Attraction
                 {
                     nom.Append(line[i]);
                 }
@@ -66,7 +67,10 @@ namespace TP2_Prog3
                 _attractions.Add(ID.ToString() ,attraction);  
 
             }
+
         }
+
+        public Dictionary<string, Attraction> Attractions => _attractions;
 
         public string GetRepresentationAttraction(string ID)
         {
