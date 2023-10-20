@@ -1,5 +1,7 @@
 ﻿
 
+using System.Net.Http.Headers;
+
 namespace TP2_Prog3
 {
     /*
@@ -19,45 +21,66 @@ namespace TP2_Prog3
     public class GestionVisiteurs
     {
         //Commentaires à faire, dis moi si les tructure de données choisi sint bonnes ???
-        private Queue<Visiteur> _visiteursFilesDAttentes;
         private Dictionary<string, Queue<Visiteur>> _filesAttente;
-        private List<Visiteur> _visteursParc;
         private Parc _parc;
 
         public GestionVisiteurs(Parc Parc)
         {
             _parc = Parc;
-            _visiteursFilesDAttentes = new Queue<Visiteur>();
+
             _filesAttente = new Dictionary<string, Queue<Visiteur>>();
+        }
+
+        public Queue<Visiteur> getFile(string id)
+        {
+            Queue<Visiteur> file = _filesAttente.GetValueOrDefault(id);
+            return file;
         }
 
         public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
         {
-            if (_parc.Attractions.ContainsKey(attractionId))
+
+            if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null)
             {
-                _filesAttente.Add(attractionId, _visiteursFilesDAttentes);
-                _filesAttente[attractionId].Enqueue(visiteur);
+                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur);
+
             }
+            else
+            {
+                _filesAttente.Add(attractionId, new Queue<Visiteur>());
+
+                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur);
+
+            }
+            visiteur.AjouterElementDansHistorique($"Entrer dans la file d'attente de l'attraction {attractionId}.");
+
         }
 
         public void EntrerVisiteurDansAttraction(string attractionId)
         {
             if (_filesAttente.ContainsKey(attractionId))
             {
-                _visiteursFilesDAttentes.Dequeue();
+                Queue<Visiteur> fileAttente = _filesAttente.GetValueOrDefault(attractionId)!;
+
+                for (; fileAttente.Count > 0;)
+                {
+                    fileAttente.Dequeue().AjouterElementDansHistorique($"Entrer dans l'attraction {attractionId}");
+                }
+            
             }
+            
         }
 
         public void EntrerVisiteurDansParc(Visiteur visiteur)
         {
-            _visteursParc.Add(visiteur);
+            visiteur.AjouterElementDansHistorique("Entrer dans le parc.");
         }
 
         public void SortirVisiteurDuParc(Visiteur visiteur)
         {
-            _visteursParc.Remove(visiteur);
+            visiteur.AjouterElementDansHistorique("Sortie du parc.");
         }
-        
+
     }
 }  
             

@@ -19,21 +19,42 @@ namespace TP2_Prog3
                 {
 
 
-                if (map.Attractions[y - 1, x - 1] == null)
-                {
-                    sb.Append("-----");
-                }
-                else
-                {
-                    Console.Write(sb.ToString());
+                    if (map.Attractions[y - 1, x - 1] == null)
+                    {
+                        sb.Append("-----");
+                    }
+                    else
+                    {
+                        Console.Write(sb.ToString());
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(map.Attractions[y - 1, x - 1].ID);
-                    Console.ForegroundColor = ConsoleColor.White;
+                        string id = map.Attractions[y - 1, x - 1].ID;
 
-                    sb = new StringBuilder();
+                        ConsoleColor couleur;
 
-                }
+                        if (gestionVisiteurs.getFile(id) != null &&
+                            (gestionVisiteurs.getFile(id).Count > parc.Attractions.GetValueOrDefault(id).Capacity / 2 &&
+                            gestionVisiteurs.getFile(id).Count < parc.Attractions.GetValueOrDefault(id).Capacity))
+                        {
+                            couleur = ConsoleColor.DarkYellow;
+                        }
+                        else if (gestionVisiteurs.getFile(id) != null &&
+                            gestionVisiteurs.getFile(id).Count >= parc.Attractions.GetValueOrDefault(id).Capacity)
+                        {
+                            couleur = ConsoleColor.Red;
+                        }
+                        else
+                        {
+                            couleur = ConsoleColor.Green;
+                        }
+
+
+                        Console.ForegroundColor = couleur;
+                        Console.Write(map.Attractions[y - 1, x - 1].ID);
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        sb = new StringBuilder();
+
+                    }
 
                     if (x == map.Longueur)
                     {
@@ -59,9 +80,18 @@ namespace TP2_Prog3
 
         public static void AfficherHistoriqueVisiteur(Visiteur visiteur)
         {
-            
+            string[] historique = visiteur.Historique;
+
+            StringBuilder sb = new();
+
+            sb.AppendLine($"### {visiteur.Nom} ###");
+
+            for (int i = 0; i < historique.Length; i++)
+            {
+                sb.AppendLine(historique[i]);
+            }
+
+            Console.WriteLine(sb.ToString());
         }
-
-
     }
 }

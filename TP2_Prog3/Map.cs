@@ -177,51 +177,6 @@ namespace TP2_Prog3
 
             attractions = new Attraction[_longueur, _largeur];
 
-
-
-
-
-
-
-            /*
-            var fichier = File.OpenRead(chemin); // FileStream?
-
-            BinaryReader br = new BinaryReader(fichier);
-
-            br.BaseStream.Position = 0;
-            string mesures = br.ReadString();
-            
-            Console.WriteLine(mesures + "\n");
-
-            int i = 0;
-
-            string strLongueur = "";
-            string strLargeur = "";
-
-            for (; mesures[i] != ';'; i++) 
-            {
-                strLongueur += mesures[i];
-            }
-
-            i++;
-            longueur = Convert.ToInt32(strLongueur);
-
-            for (; mesures[i] != '\n'; i++)
-            {
-                strLargeur += mesures[i];
-            }
-
-            largeur = Convert.ToInt32(strLargeur);
-
-
-            for (; i < longueur * largeur; i++)
-            {
-                string information = br.ReadString();
-                Console.Write(information);
-            }
-            */
-
-
         }
     }
 }

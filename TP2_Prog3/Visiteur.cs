@@ -29,8 +29,17 @@ namespace TP2_Prog3
         /// <param name="Nom">Le nom du visiteur</param>
         public Visiteur(string Nom)
         {
+            _historique = new List<string>();
             _nom = Nom;
         }
+
+        /// <summary>
+        /// Getter qui retourne le nom du visiteur.
+        /// </summary>
+        public string Nom => _nom;
+
+        public string[] Historique => _historique.ToArray();
+
 
         /// <summary>
         /// 
