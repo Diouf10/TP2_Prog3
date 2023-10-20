@@ -168,7 +168,6 @@ namespace TP2_Prog3
                 }
             }
 
-
             _longueur = Convert.ToInt32(strLongueur);
             _largeur = Convert.ToInt32(strLargeur);
 

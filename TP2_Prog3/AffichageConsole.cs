@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -9,6 +10,12 @@ namespace TP2_Prog3
 {
     public static class AffichageConsole
     {
+        /// <summary>
+        /// Cette méthode imprime la carte sur la console.
+        /// </summary>
+        /// <param name="parc"></param>
+        /// <param name="map"> La carte (avec les ID aux cases) qui sera imprimée </param>
+        /// <param name="gestionVisiteurs"></param>
         public static void Afficher(Parc parc, Map map, GestionVisiteurs gestionVisiteurs)
         {
             StringBuilder sb = new StringBuilder();
@@ -68,9 +75,8 @@ namespace TP2_Prog3
             Console.WriteLine("");
             Console.WriteLine(gestionVisiteurs.Visiteurs.Count + " visiteur(s) présent(s) dans le parc.");
             Console.WriteLine("");
-
-            
-            foreach (Attraction attraction in map.Attractions)
+            // TODO REFAIRE LA FOREACH!!!! https://stackoverflow.com/questions/41495278/how-to-enumerate-a-hashtable-for-foreach-in-c-sharp!!!
+            foreach (Attraction? attraction in map.Attractions)
             {
                 if (attraction is not null)
                 {
