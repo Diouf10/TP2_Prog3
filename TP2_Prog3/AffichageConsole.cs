@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace TP2_Prog3
         /// <summary>
         /// Cette méthode imprime la carte sur la console.
         /// </summary>
-        /// <param name="parc"></param>
+        /// <param name="parc"> Le parc dans lequel les attractions sont situées </param>
         /// <param name="map"> La carte (avec les ID aux cases) qui sera imprimée </param>
-        /// <param name="gestionVisiteurs"></param>
+        /// <param name="gestionVisiteurs"> </param>
         public static void Afficher(Parc parc, Map map, GestionVisiteurs gestionVisiteurs)
         {
             StringBuilder sb = new StringBuilder();
@@ -35,31 +36,12 @@ namespace TP2_Prog3
 
                         string id = map.Attractions[y - 1, x - 1].ID;
 
-                        ConsoleColor couleur;
-
-                        if (gestionVisiteurs.getFile(id) != null &&
-                            (gestionVisiteurs.getFile(id).Count > parc.Attractions.GetValueOrDefault(id).Capacity / 2 &&
-                            gestionVisiteurs.getFile(id).Count < parc.Attractions.GetValueOrDefault(id).Capacity))
-                        {
-                            couleur = ConsoleColor.DarkYellow;
-                        }
-                        else if (gestionVisiteurs.getFile(id) != null &&
-                            gestionVisiteurs.getFile(id).Count >= parc.Attractions.GetValueOrDefault(id).Capacity)
-                        {
-                            couleur = ConsoleColor.Red;
-                        }
-                        else
-                        {
-                            couleur = ConsoleColor.Green;
-                        }
-
-
-                        Console.ForegroundColor = couleur;
+                        Console.ForegroundColor = GetCouleurFile(gestionVisiteurs, 
+                            parc.Attractions.GetValueOrDefault(id), parc);
                         Console.Write(map.Attractions[y - 1, x - 1].ID);
                         Console.ForegroundColor = ConsoleColor.White;
 
                         sb = new StringBuilder();
-
                     }
 
                     if (x == map.Longueur)
@@ -76,38 +58,52 @@ namespace TP2_Prog3
             Console.WriteLine(gestionVisiteurs.Visiteurs.Count + " visiteur(s) présent(s) dans le parc.");
             Console.WriteLine("");
             // TODO REFAIRE LA FOREACH!!!! https://stackoverflow.com/questions/41495278/how-to-enumerate-a-hashtable-for-foreach-in-c-sharp!!!
-            foreach (Attraction? attraction in map.Attractions)
+
+            foreach (KeyValuePair<string, Attraction> kvp in parc.Attractions)
             {
+                Attraction attraction = kvp.Value;
+
                 if (attraction is not null)
                 {
-                    ConsoleColor couleur;
-                    if (gestionVisiteurs.getFile(attraction.ID) != null &&
-                            (gestionVisiteurs.getQueueLength(attraction.ID) > parc.GetAttractionCapacity(attraction.ID) / 2 &&
-                            gestionVisiteurs.getQueueLength(attraction.ID) < parc.GetAttractionCapacity(attraction.ID)))
-                    {
-                        couleur = ConsoleColor.DarkYellow;
-                    }
-                    else if (gestionVisiteurs.getFile(attraction.ID) != null &&
-                        gestionVisiteurs.getQueueLength(attraction.ID) >= parc.GetAttractionCapacity(attraction.ID))
-                    {
-                        couleur = ConsoleColor.Red;
-                    }
-                    else
-                    {
-                        couleur = ConsoleColor.Green;
-                    }
-                    Console.ForegroundColor = couleur;
+                    
+                    Console.ForegroundColor = GetCouleurFile(gestionVisiteurs, attraction, parc);
                     Console.Write("  ●  ");
                     Console.ForegroundColor = ConsoleColor.White;
                     // MAP LIGNE 127 EST LA RAISON PK LES ATTRACTIONS SE NOMMENT PLACEHOLDER POUR LE MOMENT...
-                    Console.WriteLine(String.Format("{0,5} {1,15} ({2}) \t\t {3,2}/{4,2}", attraction.ID, attraction.Nom, 
+                    Console.WriteLine(String.Format("{0,5} {1,15} ({2}) \t\t {3,2}/{4,2}", attraction.ID, attraction.Nom,
                         attraction.TypeAttraction, gestionVisiteurs.getQueueLength(attraction.ID), attraction.Capacity));
-
 
                 }
             }
             Console.WriteLine();
+        }
 
+        /// <summary>
+        /// Cette méthode retourne la "couleur d'activité".
+        /// </summary>
+        /// <param name="gestionVisiteurs">La GestionVisiteur qui contient la queue.</param>
+        /// <param name="attraction">L'attraction concernée</param>
+        /// <param name="parc">Le parc</param>
+        /// <returns>La couleur d'affichage de l'attraction</returns>
+        private static ConsoleColor GetCouleurFile(GestionVisiteurs gestionVisiteurs, Attraction attraction, Parc parc)
+        {
+            ConsoleColor couleur;
+            if (gestionVisiteurs.getFile(attraction.ID) != null &&
+                    (gestionVisiteurs.getQueueLength(attraction.ID) > parc.GetAttractionCapacity(attraction.ID) / 2 &&
+                    gestionVisiteurs.getQueueLength(attraction.ID) < parc.GetAttractionCapacity(attraction.ID)))
+            {
+                couleur = ConsoleColor.DarkYellow;
+            }
+            else if (gestionVisiteurs.getFile(attraction.ID) != null &&
+                gestionVisiteurs.getQueueLength(attraction.ID) >= parc.GetAttractionCapacity(attraction.ID))
+            {
+                couleur = ConsoleColor.Red;
+            }
+            else
+            {
+                couleur = ConsoleColor.Green;
+            }
+            return couleur;
         }
 
         /// <summary>
