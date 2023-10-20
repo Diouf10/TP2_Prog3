@@ -1,6 +1,7 @@
 ﻿
 
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 
 namespace TP2_Prog3
 {
@@ -20,6 +21,10 @@ namespace TP2_Prog3
 
     public class GestionVisiteurs
     {
+        // Quelle structure de donnée serait adéquate pour avoir la liste des visiteurs?
+        private List<Visiteur> _visiteurs;
+
+
         //Commentaires à faire, dis moi si les tructure de données choisi sint bonnes ???
         private Dictionary<string, Queue<Visiteur>> _filesAttente;
         private Parc _parc;
@@ -28,32 +33,49 @@ namespace TP2_Prog3
         {
             _parc = Parc;
 
+            _visiteurs = new List<Visiteur>();
+
             _filesAttente = new Dictionary<string, Queue<Visiteur>>();
         }
 
+        [Obsolete] // à enlever éventuellemenjt
         public Queue<Visiteur> getFile(string id)
         {
             Queue<Visiteur> file = _filesAttente.GetValueOrDefault(id);
             return file;
         }
 
-        public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
+        public int getQueueLength(string id)
         {
+            Queue<Visiteur> file = _filesAttente.GetValueOrDefault(id);
 
-            if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null)
+            if (file != null) 
             {
-                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur);
-
+                return file.Count;
             }
             else
             {
-                _filesAttente.Add(attractionId, new Queue<Visiteur>());
-
-                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur);
-
+                return -1; // laisse à -1 pour le moment, ça aide à mieux comprendre comment le code fonctionne. TODO!!!
             }
-            visiteur.AjouterElementDansHistorique($"Entrer dans la file d'attente de l'attraction {attractionId}.");
+        }
 
+        public List<Visiteur> Visiteurs => _visiteurs;
+
+        public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
+        {
+
+            if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null) // n
+            {
+                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur); // 1 ou n
+            }
+            else
+            {
+                _filesAttente.Add(attractionId, new Queue<Visiteur>()); // 1
+
+                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur); // 1 ou n
+            }
+
+            visiteur.AjouterElementDansHistorique($"Entrer dans la file d'attente de l'attraction {attractionId}.");
         }
 
         public void EntrerVisiteurDansAttraction(string attractionId)
@@ -61,23 +83,23 @@ namespace TP2_Prog3
             if (_filesAttente.ContainsKey(attractionId))
             {
                 Queue<Visiteur> fileAttente = _filesAttente.GetValueOrDefault(attractionId)!;
+                
+                fileAttente.Dequeue().AjouterElementDansHistorique($"Entrer dans l'attraction {attractionId}");
 
-                for (; fileAttente.Count > 0;)
-                {
-                    fileAttente.Dequeue().AjouterElementDansHistorique($"Entrer dans l'attraction {attractionId}");
-                }
-            
             }
             
         }
 
         public void EntrerVisiteurDansParc(Visiteur visiteur)
         {
+            _visiteurs.Add(visiteur);
             visiteur.AjouterElementDansHistorique("Entrer dans le parc.");
         }
 
         public void SortirVisiteurDuParc(Visiteur visiteur)
         {
+            _visiteurs.Remove(visiteur); // O(n) !!!
+
             visiteur.AjouterElementDansHistorique("Sortie du parc.");
         }
 

@@ -12,12 +12,11 @@ namespace TP2_Prog3
         public static void Afficher(Parc parc, Map map, GestionVisiteurs gestionVisiteurs)
         {
             StringBuilder sb = new StringBuilder();
-
-            for(int y = 1; y <= map.Largeur; y++ )
+            Console.OutputEncoding = Encoding.UTF8;
+            for (int y = 1; y <= map.Largeur; y++ )
             {
                 for (int x = 1; x <= map.Longueur; x++)
                 {
-
 
                     if (map.Attractions[y - 1, x - 1] == null)
                     {
@@ -66,18 +65,49 @@ namespace TP2_Prog3
                 }
             }
 
-            Console.WriteLine("\n");
+            Console.WriteLine("");
+            Console.WriteLine(gestionVisiteurs.Visiteurs.Count + " visiteur(s) présent(s) dans le parc.");
+            Console.WriteLine("");
 
-            // ceci est clairement wrong... il faudra créer la GestionVisiteur...
+            
             foreach (Attraction attraction in map.Attractions)
             {
-                //parc.Attractions.GetValueOrDefault(attraction.ID);
+                if (attraction is not null)
+                {
+                    ConsoleColor couleur;
+                    if (gestionVisiteurs.getFile(attraction.ID) != null &&
+                            (gestionVisiteurs.getQueueLength(attraction.ID) > parc.GetAttractionCapacity(attraction.ID) / 2 &&
+                            gestionVisiteurs.getQueueLength(attraction.ID) < parc.GetAttractionCapacity(attraction.ID)))
+                    {
+                        couleur = ConsoleColor.DarkYellow;
+                    }
+                    else if (gestionVisiteurs.getFile(attraction.ID) != null &&
+                        gestionVisiteurs.getQueueLength(attraction.ID) >= parc.GetAttractionCapacity(attraction.ID))
+                    {
+                        couleur = ConsoleColor.Red;
+                    }
+                    else
+                    {
+                        couleur = ConsoleColor.Green;
+                    }
+                    Console.ForegroundColor = couleur;
+                    Console.Write("  ●  ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    // MAP LIGNE 127 EST LA RAISON PK LES ATTRACTIONS SE NOMMENT PLACEHOLDER POUR LE MOMENT...
+                    Console.WriteLine(String.Format("{0,5} {1,15} ({2}) \t\t {3,2}/{4,2}", attraction.ID, attraction.Nom, 
+                        attraction.TypeAttraction, gestionVisiteurs.getQueueLength(attraction.ID), attraction.Capacity));
 
-                Console.Write("");
 
+                }
             }
+            Console.WriteLine();
+
         }
 
+        /// <summary>
+        /// Cette méthode écrit l'historique d'un visiteur sur la console.
+        /// </summary>
+        /// <param name="visiteur"> Le visiteur en question. </param>
         public static void AfficherHistoriqueVisiteur(Visiteur visiteur)
         {
             string[] historique = visiteur.Historique;

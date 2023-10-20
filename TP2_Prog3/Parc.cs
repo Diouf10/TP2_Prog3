@@ -72,6 +72,23 @@ namespace TP2_Prog3
 
         public Dictionary<string, Attraction> Attractions => _attractions;
 
+        public Attraction GetAttraction(string id)
+        {
+            return _attractions.GetValueOrDefault(id);
+
+        }
+
+        public int GetAttractionCapacity(string id)
+        {
+            Attraction attraction = GetAttraction(id);
+            if (attraction is null)
+            {
+                return -1;
+            }
+            return attraction.Capacity;
+        }
+
+        [Obsolete] // Obsolète?
         public string GetRepresentationAttraction(string ID)
         {
             Attraction attraction = _attractions.GetValueOrDefault(ID);
