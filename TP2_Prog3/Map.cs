@@ -18,12 +18,12 @@ namespace TP2_Prog3
      * Vu que nous créons notre array une fois et celle-ci ne changera pas de capacité, celui-ci
      * ne prendra pas beaucoup de place en mémoire et sera donc efficace pour les besoins de la
      * map.
-     * 
+     *
      * - Mouhammad Wagan Diouf
      */
 
     /// <summary>
-    /// 
+    /// Classe qui pemrmet de conservé et de générer une map.
     /// </summary>
     public class Map
     {
@@ -33,7 +33,7 @@ namespace TP2_Prog3
         private Attraction?[,] _attractions;
 
         /// <summary>
-        /// 
+        /// Constructeur de la clase map.
         /// </summary>
         public Map()
         {
@@ -44,14 +44,11 @@ namespace TP2_Prog3
 
             int i = 0;
 
-            string strTemp = string.Empty;
-
             for (; i < lines[0].Length; i++)
             {
                 if (char.IsDigit(lines[0][i]))
                 {
                     strLongueur += lines[0][i];
-
                 }
                 else
                 {
@@ -64,7 +61,6 @@ namespace TP2_Prog3
                 if (char.IsDigit(lines[0][i]))
                 {
                     strLargeur += lines[0][i];
-
                 }
             }
 
@@ -121,7 +117,7 @@ namespace TP2_Prog3
                     }
                 }
 
-                foreach (((int X, int Y) position, string id) attraction in liste )
+                foreach (((int X, int Y) position, string id) attraction in liste)
                 {
                     _attractions[attraction.position.Y - 1, attraction.position.X - 1] = new Attraction(attraction.id, "PlaceHolder", 4, 'T');
                 }
@@ -129,17 +125,17 @@ namespace TP2_Prog3
         }
 
         /// <summary>
-        /// 
+        /// Permet d'obtenir la longueur de la map.
         /// </summary>
         public int Longueur => _longueur;
 
         /// <summary>
-        /// 
+        /// Permet d'obtenir la largeur de la map.
         /// </summary>
         public int Largeur => _largeur;
 
         /// <summary>
-        /// 
+        /// Permet d'obtenir la map d'attractions.
         /// </summary>
         public Attraction?[,] Attractions => _attractions;
     }

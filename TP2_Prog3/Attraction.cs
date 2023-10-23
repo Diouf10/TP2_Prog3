@@ -2,12 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using System.Linq.Expressions;
-
 namespace TP2_Prog3
 {
     /// <summary>
-    ///
+    /// Classe Attraction permet de conserver les données d'una attraction.
     /// </summary>
     public class Attraction
     {
@@ -20,12 +18,12 @@ namespace TP2_Prog3
 
         private static Dictionary<char, string> dictionnaireAttractions = new Dictionary<char, string>()
         {
-            {'S', "Sensation Forte"},
-            {'I', "Intermédiaire"},
-            {'F', "Famille"},
-            {'T', "Toilette"},
-            {'M', "Magasin"},
-            {'R', "Restaurant"},
+            { 'S', "Sensation Forte" },
+            { 'I', "Intermédiaire" },
+            { 'F', "Famille" },
+            { 'T', "Toilette" },
+            { 'M', "Magasin" },
+            { 'R', "Restaurant" },
         };
 
         // Mouhammad : oui  Je pense que c'est un dictionnary !!!!
@@ -34,10 +32,10 @@ namespace TP2_Prog3
         /// <summary>
         /// Constructeur de la classe Attraction.
         /// </summary>
-        /// <param name="id">Le ID unique de chaque attraction</param>
-        /// <param name="nom">Le nom de l'attraction</param>
-        /// <param name="capacity">Le nombre maximal de personne pouvant utiliser l'attraction</param>
-        /// <param name="typeAttraction">Les différents établissements du Parc</param>
+        /// <param name="id">Le ID unique de chaque attraction.</param>
+        /// <param name="nom">Le nom de l'attraction.</param>
+        /// <param name="capacity">Le nombre maximal de personne pouvant utiliser l'attraction.</param>
+        /// <param name="typeAttraction">Les différents établissements du Parc.</param>
         /// <exception cref="InvalidOperationException">Exception qui survient lorsque le type choisi n'existe pas.</exception>
         public Attraction(string id, string nom, int capacity, char typeAttraction)
         {
@@ -75,25 +73,30 @@ namespace TP2_Prog3
         /// </summary>
         public char TypeAttraction => typeAttraction;
 
+        /// <summary>
+        /// Permet d'obtenir le titre de l'attraction selon son type d'attarction.
+        /// </summary>
+        /// <param name="typesAttraction">le type d'attraction d'une attarction.</param>
+        /// <returns>Retourne le titre de l'attraction.</returns>
         [Obsolete] // PAS ENCORE FAIT... SERA POTENTIELLEMENT INUTILE!.
-        public string TypeAttractionTitre(char typeAttraction)
+        public string TypeAttractionTitre(char typesAttraction)
         {
-            switch (typeAttraction)
+            switch (typesAttraction)
             {
                 case 'S':
-                    
+
                     break;
                 case 'I':
-                    
+
                     break;
                 case 'F':
-                    
+
                     break;
                 case 'T':
-                    
+
                     break;
                 case 'M':
-                    
+
                     break;
                 case 'R':
 
@@ -103,7 +106,7 @@ namespace TP2_Prog3
                     break;
             }
 
-            return "";
-        } 
+            return string.Empty;
+        }
     }
 }

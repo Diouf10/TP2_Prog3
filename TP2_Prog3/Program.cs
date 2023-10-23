@@ -9,9 +9,9 @@ namespace TP2_Prog3
     /// </summary>
     public static class Program
     {
-        private static readonly Parc Parc = new();
-        private static readonly Map Map = new();
-        private static readonly GestionVisiteurs GestionVisiteurs = new(Parc);
+        private static readonly Parc Parc = new ();
+        private static readonly Map Map = new ();
+        private static readonly GestionVisiteurs GestionVisiteurs = new (Parc);
 
         /// <summary>
         /// Le main du programme offert par le professeur.
@@ -50,9 +50,9 @@ namespace TP2_Prog3
         }
 
         /// <summary>
-        /// 
+        /// Test qui permet de faire entrer le visiteur dans le Parc.
         /// </summary>
-        /// <param name="visiteur"></param>
+        /// <param name="visiteur">Visiteur qui veut entrer dans le parc.</param>
         private static void TestEntrerVisiteur(Visiteur visiteur)
         {
             GestionVisiteurs.EntrerVisiteurDansParc(visiteur);
@@ -60,16 +60,14 @@ namespace TP2_Prog3
             Afficher();
         }
 
-
         /// <summary>
-        /// 
+        /// Test qui permet de faire sirtir un visteur du parc.
         /// </summary>
-        /// <param name="visiteur"></param>
+        /// <param name="visiteur">visiteur qui veut sortir du parc.</param>
         private static void TestSortirVisiteur(Visiteur visiteur)
         {
             GestionVisiteurs.SortirVisiteurDuParc(visiteur);
             Afficher();
         }
-
     }
 }
