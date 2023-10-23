@@ -14,12 +14,11 @@ namespace TP2_Prog3
     * Le Dictionary augmente la taille du Hash Table en fonction du nombre d'éléments stockés dans le tableau
     * afin de limiter les collisions.
     *
+    * Pour le texte (les lignes à écrire), nous avons décidé d'utiliser le string builder, car
+    * car il se pourrait que des textes de la console qui change selon le contexte et dont on ne connait
+    * pas le nombre de modifications qui sera fait à l'avance. Le string builder sera efficace en ce sens car
+    * il conserve un tampon pour accueillir les ajouts.
     *
-    *
-    * Bonus - La générécité faciliterait beaucoup le codage de la classe.
-    *
-    * - TODO!!!
-
     */
 
     using System;

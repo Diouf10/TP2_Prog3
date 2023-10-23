@@ -12,12 +12,6 @@
    * Le Dictionary augmente la taille du Hash Table en fonction du nombre d'éléments stockés dans le tableau
    * afin de limiter les collisions.
    *
-   *
-   *
-   * Bonus - La générécité faciliterait beaucoup le codage de la classe.
-   *
-   * - TODO!!!
-
    */
 
 namespace TP2_Prog3
@@ -67,7 +61,7 @@ namespace TP2_Prog3
             }
             else
             {
-                throw new InvalidOperationException("Ce type d'attraction n'existe pas !");
+                throw new InvalidOperationException($" {typeAttraction} : Ce type d'attraction n'existe pas !");
             }
         }
 

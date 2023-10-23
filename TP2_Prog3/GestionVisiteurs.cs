@@ -12,7 +12,7 @@ namespace TP2_Prog3;
  * que l'organisation se refait à chaque fois qu'un resize est déclanché afin d'économiser de l'espace mémoire.
 
  * 2 - Pour gérer que chaque attraction puisse avoir ses visiteurs, les meilleures options seraient
- * le Dictionnary et la HashTable, puisqu'ils nous permettemt d'accéder rapidement à un élément à l'aide dune clé.
+ * le Dictionnary et la HashTable, puisqu'ils nous permettent d'accéder rapidement à un élément à l'aide dune clé.
  * Le dictionnary serait le plus facile à utiliser puisqu'il est fortement typé, facilitant beaucoup le codage et la gestion
  * des types face à la HashTable, qui peut contenir pratiquement n'importe quoi. De plus, nous n'avons pas d'informations
  * personnelles ou importantes à propos de quiconque, donc la sécurité n'est pas le plus important. Aussi, grâce au système de clé,
