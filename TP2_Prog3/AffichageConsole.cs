@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="AffichageConsole.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 
 namespace TP2_Prog3
 {
+    using System.Text;
     public static class AffichageConsole
     {
         /// <summary>
@@ -16,12 +13,29 @@ namespace TP2_Prog3
         /// </summary>
         /// <param name="parc"> Le parc dans lequel les attractions sont situées </param>
         /// <param name="map"> La carte (avec les ID aux cases) qui sera imprimée </param>
-        /// <param name="gestionVisiteurs"> </param>
+        /// <param name="gestionVisiteurs"> La gestionVisiteurs qui contient les files d'attente. </param>
         public static void Afficher(Parc parc, Map map, GestionVisiteurs gestionVisiteurs)
         {
+            if (parc is null)
+            {
+                throw new ArgumentNullException(nameof(parc));
+            }
+
+            if (map is null)
+            {
+                throw new ArgumentNullException(nameof(map));
+            }
+
+            if (gestionVisiteurs is null)
+            {
+                throw new ArgumentNullException(nameof(gestionVisiteurs));
+            }
+
+            Console.WriteLine("\n");
+
             StringBuilder sb = new StringBuilder();
             Console.OutputEncoding = Encoding.UTF8;
-            for (int y = 1; y <= map.Largeur; y++ )
+            for (int y = 1; y <= map.Largeur; y++)
             {
                 for (int x = 1; x <= map.Longueur; x++)
                 {
@@ -34,11 +48,16 @@ namespace TP2_Prog3
                     {
                         Console.Write(sb.ToString());
 
-                        string id = map.Attractions[y - 1, x - 1].ID;
+                        string id = map.Attractions[y - 1, x - 1] !.ID; // can't be null. Cince already checked above
 
-                        Console.ForegroundColor = GetCouleurFile(gestionVisiteurs, 
-                            parc.Attractions.GetValueOrDefault(id), parc);
-                        Console.Write(map.Attractions[y - 1, x - 1].ID);
+                        // TODO améliorer ce code.
+                        Attraction attraction = parc.Attractions.GetValueOrDefault(id) !;
+                        int nbVisiteursDansFile = gestionVisiteurs.GetQueueCount(id);
+
+                        Console.ForegroundColor = GetCouleurFile(
+                            nbVisiteursDansFile, attraction, parc);
+
+                        Console.Write(attraction.ID);
                         Console.ForegroundColor = ConsoleColor.White;
 
                         sb = new StringBuilder();
@@ -46,64 +65,41 @@ namespace TP2_Prog3
 
                     if (x == map.Longueur)
                     {
-                        sb.Append("\n");
+                        sb.Append('\n');
                         Console.Write(sb.ToString());
                         sb = new StringBuilder();
-
                     }
                 }
             }
 
-            Console.WriteLine("");
-            Console.WriteLine(gestionVisiteurs.Visiteurs.Count + " visiteur(s) présent(s) dans le parc.");
-            Console.WriteLine("");
-            // TODO REFAIRE LA FOREACH!!!! https://stackoverflow.com/questions/41495278/how-to-enumerate-a-hashtable-for-foreach-in-c-sharp!!!
+            Console.WriteLine(string.Empty);
+            Console.WriteLine(gestionVisiteurs.Visiteurs.Length + " visiteur(s) présent(s) dans le parc.");
+            Console.WriteLine(string.Empty);
 
+            // TODO REFAIRE LA FOREACH!!!! https://stackoverflow.com/questions/41495278/how-to-enumerate-a-hashtable-for-foreach-in-c-sharp!!!
             foreach (KeyValuePair<string, Attraction> kvp in parc.Attractions)
             {
                 Attraction attraction = kvp.Value;
 
                 if (attraction is not null)
                 {
-                    
-                    Console.ForegroundColor = GetCouleurFile(gestionVisiteurs, attraction, parc);
+                    int nbVisiteursDansFile = gestionVisiteurs.GetQueueCount(kvp.Key);
+
+                    Console.ForegroundColor = GetCouleurFile(nbVisiteursDansFile, attraction, parc);
                     Console.Write("  ●  ");
                     Console.ForegroundColor = ConsoleColor.White;
                     // MAP LIGNE 127 EST LA RAISON PK LES ATTRACTIONS SE NOMMENT PLACEHOLDER POUR LE MOMENT...
-                    Console.WriteLine(String.Format("{0,5} {1,15} ({2}) \t\t {3,2}/{4,2}", attraction.ID, attraction.Nom,
-                        attraction.TypeAttraction, gestionVisiteurs.getQueueLength(attraction.ID), attraction.Capacity));
-
+                    Console.WriteLine(string.Format(
+                        "{0,5} {1,15} ({2}) \t\t {3,2} / {4,-2}",
+                        attraction.ID,
+                        attraction.Nom,
+                        attraction.TypeAttraction,
+                        nbVisiteursDansFile,
+                        attraction.Capacity));
                 }
             }
-            Console.WriteLine();
-        }
 
-        /// <summary>
-        /// Cette méthode retourne la "couleur d'activité".
-        /// </summary>
-        /// <param name="gestionVisiteurs">La GestionVisiteur qui contient la queue.</param>
-        /// <param name="attraction">L'attraction concernée</param>
-        /// <param name="parc">Le parc</param>
-        /// <returns>La couleur d'affichage de l'attraction</returns>
-        private static ConsoleColor GetCouleurFile(GestionVisiteurs gestionVisiteurs, Attraction attraction, Parc parc)
-        {
-            ConsoleColor couleur;
-            if (gestionVisiteurs.getFile(attraction.ID) != null &&
-                    (gestionVisiteurs.getQueueLength(attraction.ID) > parc.GetAttractionCapacity(attraction.ID) / 2 &&
-                    gestionVisiteurs.getQueueLength(attraction.ID) < parc.GetAttractionCapacity(attraction.ID)))
-            {
-                couleur = ConsoleColor.DarkYellow;
-            }
-            else if (gestionVisiteurs.getFile(attraction.ID) != null &&
-                gestionVisiteurs.getQueueLength(attraction.ID) >= parc.GetAttractionCapacity(attraction.ID))
-            {
-                couleur = ConsoleColor.Red;
-            }
-            else
-            {
-                couleur = ConsoleColor.Green;
-            }
-            return couleur;
+            Console.WriteLine("\n");
         }
 
         /// <summary>
@@ -112,18 +108,50 @@ namespace TP2_Prog3
         /// <param name="visiteur"> Le visiteur en question. </param>
         public static void AfficherHistoriqueVisiteur(Visiteur visiteur)
         {
-            string[] historique = visiteur.Historique;
+            string historique = visiteur.Historique;
 
-            StringBuilder sb = new();
+            // Une seule addition de string variable ne devrait pas être la fin du monde,
+            //      un nouvel array créé qu'une seule fois.
+            Console.WriteLine($"### {visiteur.Nom} ###" + historique);
+        }
 
-            sb.AppendLine($"### {visiteur.Nom} ###");
-
-            for (int i = 0; i < historique.Length; i++)
+        /// <summary>
+        /// Cette méthode retourne la "couleur d'activité".
+        /// </summary>
+        /// <param name="nbVisiteursDansFile">Le nombre de visiteurs dans la file.</param>
+        /// <param name="attraction">L'attraction concernée</param>
+        /// <param name="parc">Le parc</param>
+        /// <returns>La couleur d'affichage de l'attraction</returns>
+        private static ConsoleColor GetCouleurFile(int nbVisiteursDansFile, Attraction attraction, Parc parc)
+        {
+            if (parc is null)
             {
-                sb.AppendLine(historique[i]);
+                throw new ArgumentNullException(nameof(parc));
             }
 
-            Console.WriteLine(sb.ToString());
+            if (attraction is null)
+            {
+                throw new ArgumentNullException(nameof(attraction));
+            }
+
+
+
+            ConsoleColor couleur;
+            if (nbVisiteursDansFile > parc.GetAttractionCapacity(attraction.ID) / 2 &&
+                    nbVisiteursDansFile < parc.GetAttractionCapacity(attraction.ID))
+            {
+                couleur = ConsoleColor.DarkYellow;
+            }
+            else if (nbVisiteursDansFile >= parc.GetAttractionCapacity(attraction.ID))
+            {
+                couleur = ConsoleColor.Red;
+            }
+            else
+            {
+                couleur = ConsoleColor.Green;
+            }
+
+            return couleur;
         }
     }
 }

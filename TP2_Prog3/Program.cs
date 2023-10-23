@@ -1,26 +1,21 @@
-﻿namespace TP2_Prog3
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="Program.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace TP2_Prog3
 {
+    /// <summary>
+    /// Le programme qui roule...
+    /// </summary>
     public static class Program
     {
         private static readonly Parc Parc = new();
         private static readonly Map Map = new();
         private static readonly GestionVisiteurs GestionVisiteurs = new(Parc);
-        private static void Afficher()
-        {
-            Thread.Sleep(1000);
-            AffichageConsole.Afficher(Parc, Map, GestionVisiteurs);
-        }
-        private static void TestEntrerVisiteur(Visiteur visiteur)
-        {
-            GestionVisiteurs.EntrerVisiteurDansParc(visiteur);
-            GestionVisiteurs.EntrerVisiteurDansFileAttente("M0002", visiteur);
-            Afficher();
-        }
-        private static void TestSortirVisiteur(Visiteur visiteur)
-        {
-            GestionVisiteurs.SortirVisiteurDuParc(visiteur);
-            Afficher();
-        }
+
+        /// <summary>
+        /// Le main du programme offert par le professeur.
+        /// </summary>
         public static void Main()
         {
             AffichageConsole.Afficher(Parc, Map, GestionVisiteurs);
@@ -37,11 +32,44 @@
                 GestionVisiteurs.EntrerVisiteurDansAttraction("M0002");
                 Afficher();
             }
+
             TestSortirVisiteur(visiteur3);
             TestSortirVisiteur(visiteur4);
             TestSortirVisiteur(visiteur2);
             TestSortirVisiteur(visiteur1);
             AffichageConsole.AfficherHistoriqueVisiteur(visiteur1);
         }
+
+        /// <summary>
+        /// Méthode statique qui permet d'afficher la map. Utilisée dans les tests.
+        /// </summary>
+        private static void Afficher()
+        {
+            Thread.Sleep(1000);
+            AffichageConsole.Afficher(Parc, Map, GestionVisiteurs);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visiteur"></param>
+        private static void TestEntrerVisiteur(Visiteur visiteur)
+        {
+            GestionVisiteurs.EntrerVisiteurDansParc(visiteur);
+            GestionVisiteurs.EntrerVisiteurDansFileAttente("M0002", visiteur);
+            Afficher();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visiteur"></param>
+        private static void TestSortirVisiteur(Visiteur visiteur)
+        {
+            GestionVisiteurs.SortirVisiteurDuParc(visiteur);
+            Afficher();
+        }
+
     }
 }

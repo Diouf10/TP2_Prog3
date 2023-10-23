@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="Parc.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 
 namespace TP2_Prog3
 {
+    /* 
+    * 
+    * - TODO!!!
+    * Pour la "liste" d'attractions, la Hash Table semblerait être un bon choix :
+         
+    *      
+    * Bonus - La générécité faciliterait beaucoup le codage de la classe.
+    * 
+    * - TODO!!!
+    */
+
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class Parc
     {
         private Dictionary<string, Attraction> _attractions = new Dictionary<string, Attraction>();
-        /* 
-         * Pour la "liste" d'attractions, la Hash Table semblerait être un bon choix :
-         * 1 - Nous ne connaîtrons pas la quantité d'attractions à l'avance, et un système de
-         *      style bibliothèque conviendrait à ce critère.
-         * 2 - On pourrait facilement accéder à l'attraction via un ID, car la Hash Table utilise
-         *      un système de clé qui pourrait servir pour l'ID.
-         *      
-         * Bonus - La générécité faciliterait beaucoup le codage de la classe.
-         * 
-         * - Alexandre Lavoie
-         */
         
         public Parc() 
         {

@@ -1,12 +1,13 @@
-﻿
-using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="Map.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace TP2_Prog3
 {
+    using System.Text;
+
     /*
-     * Pour la création de la map je pense que nous avons besoin d'un Array :
+     * Pour la création de la map je pense que nous avons besoin d'un Array2D :
      *
      * 1- Car nous n'aurons pas besoin d'insérer des données, puisque nous ne voulons pas
      * modifier notre liste après execution, nous aurons simplement besoin d'accéder à la liste
@@ -21,10 +22,9 @@ namespace TP2_Prog3
      * - Mouhammad Wagan Diouf
      */
 
-    /*
-     * Pour l'import de la map il nous faudra aussi un stringbuilder, car celui-ci fonctionne de la même façon,
-     * ça nous éviterait de trop resizer l'array grâce à l'espace disponible d'avance.
-     */
+    /// <summary>
+    /// 
+    /// </summary>
     public class Map
     {
         private int _longueur;
@@ -32,15 +32,15 @@ namespace TP2_Prog3
 
         private Attraction?[,] _attractions;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Map()
         {
-
             string[] lines = File.ReadAllLines(@"../../../map.txt");
 
-            //Console.WriteLine(lines[0]);
-
-            string strLongueur = "";
-            string strLargeur = "";
+            string strLongueur = string.Empty;
+            string strLargeur = string.Empty;
 
             int i = 0;
 
@@ -54,7 +54,9 @@ namespace TP2_Prog3
 
                 }
                 else
+                {
                     break;
+                }
             }
 
             for (; i < lines[0].Length; i++)
@@ -66,19 +68,16 @@ namespace TP2_Prog3
                 }
             }
 
-
             _longueur = Convert.ToInt32(strLongueur);
             _largeur = Convert.ToInt32(strLargeur);
 
             _attractions = new Attraction?[_longueur, _largeur]; // NULLABLE!!! (À changer maybe?)
 
-            Console.WriteLine($"{_longueur} PAR {_largeur}");
-
             for (int j = 1; j <= _largeur; j++)
             {
-                StringBuilder currentWord = new();
+                StringBuilder currentWord = new ();
 
-                List<((int posX, int posY), string)> liste = new();
+                List<((int posX, int posY), string)> liste = new ();
 
                 int posX = 1;
 
@@ -97,7 +96,9 @@ namespace TP2_Prog3
                         foreach (char c in idAttraction)
                         {
                             if (char.IsLetterOrDigit(c))
+                            {
                                 estIDValide = true;
+                            }
                         }
 
                         if (estIDValide)
@@ -107,75 +108,39 @@ namespace TP2_Prog3
                     }
                     else if (lines[j][k] != ' ' && isSpace)
                     {
-                        currentWord = new();
+                        currentWord = new ();
                         currentWord.Append(lines[j][k]);
 
                         isSpace = false;
 
-                        posX++; 
-
+                        posX++;
                     }
                     else
                     {
                         currentWord.Append(lines[j][k]);
                     }
-
                 }
 
-                foreach(((int X, int Y) position, string id) attraction in liste )
+                foreach (((int X, int Y) position, string id) attraction in liste )
                 {
                     _attractions[attraction.position.Y - 1, attraction.position.X - 1] = new Attraction(attraction.id, "PlaceHolder", 4, 'T');
                 }
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Longueur => _longueur;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Largeur => _largeur;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Attraction?[,] Attractions => _attractions;
-
-        // OLD 
-        public void ImporterMapDeFichier(string chemin, out Attraction[,] attractions)
-        {
-            string[] lines = File.ReadAllLines(@"../../../map.txt");
-
-            Console.WriteLine(lines[0]);
-
-            string strLongueur = "";
-            string strLargeur = "";
-
-            int i = 0;
-
-            string strTemp = string.Empty;
-
-            for (; i < lines[0].Length; i++)
-            {
-                if (char.IsDigit(lines[0][i]))
-                {
-                    strLongueur += lines[0][i];
-
-                }
-                else
-                    break;
-            }
-
-            for (; i < lines[0].Length; i++)
-            {
-                if (char.IsDigit(lines[0][i]))
-                {
-                    strLargeur += lines[0][i];
-
-                }
-            }
-
-            _longueur = Convert.ToInt32(strLongueur);
-            _largeur = Convert.ToInt32(strLargeur);
-
-            Console.WriteLine($"{_longueur} .. {_largeur}");
-
-
-            attractions = new Attraction[_longueur, _largeur];
-
-        }
     }
 }

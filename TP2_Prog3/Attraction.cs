@@ -1,48 +1,53 @@
-﻿
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="Attraction.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System.Linq.Expressions;
 
 namespace TP2_Prog3
 {
+    /// <summary>
+    ///
+    /// </summary>
     public class Attraction
     {
-        private string _ID;
-        private string _nom;
+        private string id;
+        private string nom;
 
-        private int _capacity;
+        private int capacity;
 
-        private char _typeAttraction;
+        private char typeAttraction;
 
-        private Dictionary<char, string> DictionnaireAttractions = new Dictionary<char, string>()
+        private static Dictionary<char, string> dictionnaireAttractions = new Dictionary<char, string>()
         {
             {'S', "Sensation Forte"},
             {'I', "Intermédiaire"},
             {'F', "Famille"},
             {'T', "Toilette"},
             {'M', "Magasin"},
-            {'R', "Restaurant"}
+            {'R', "Restaurant"},
         };
 
-        // Type d'attraction -> Dictionnary? TODO!!!!!
         // Mouhammad : oui  Je pense que c'est un dictionnary !!!!
         // ex: <char symbole, string typeAttraction>
-        
-        
-        /// <summary>
-        /// Constructeur de la classe Attraction
-        /// </summary>
-        /// <param name="ID">Le ID unique de chaque attraction</param>
-        /// <param name="Nom">Le nom de l'attraction</param>
-        /// <param name="Capacity">Le nombre maximal de personne pouvant utiliser l'attraction</param>
-        /// <param name="TypeAttraction">Les différents établissements du Parc</param>
-        /// <exception cref="InvalidOperationException">Exception qui survient lorsque le type choisi n'existe pas.</exception>
-        public Attraction(string ID, string Nom, int Capacity, char TypeAttraction)
-        {
-            _ID = ID;
-            _nom = Nom;
-            _capacity = Capacity;
 
-            if (DictionnaireAttractions.ContainsKey(TypeAttraction)) 
+        /// <summary>
+        /// Constructeur de la classe Attraction.
+        /// </summary>
+        /// <param name="id">Le ID unique de chaque attraction</param>
+        /// <param name="nom">Le nom de l'attraction</param>
+        /// <param name="capacity">Le nombre maximal de personne pouvant utiliser l'attraction</param>
+        /// <param name="typeAttraction">Les différents établissements du Parc</param>
+        /// <exception cref="InvalidOperationException">Exception qui survient lorsque le type choisi n'existe pas.</exception>
+        public Attraction(string id, string nom, int capacity, char typeAttraction)
+        {
+            this.id = id;
+            this.nom = nom;
+            this.capacity = capacity;
+
+            if (dictionnaireAttractions.ContainsKey(typeAttraction))
             {
-                _typeAttraction = TypeAttraction;
+                this.typeAttraction = typeAttraction;
             }
             else
             {
@@ -50,11 +55,55 @@ namespace TP2_Prog3
             }
         }
 
-        public string ID => _ID;
-        public string Nom => _nom;
-        public int Capacity => _capacity;
+        /// <summary>
+        /// Getter qui retourne l'ID de la présente attraction.
+        /// </summary>
+        public string ID => id;
 
-        public char TypeAttraction => _typeAttraction;
+        /// <summary>
+        /// Getter qui retourne le nom de la présente attraction.
+        /// </summary>
+        public string Nom => nom;
 
+        /// <summary>
+        /// Getter qui retourne la capacité de la présente attraction.
+        /// </summary>
+        public int Capacity => capacity;
+
+        /// <summary>
+        /// Getter qui retourne le type d'attraction de la présente attraction.
+        /// </summary>
+        public char TypeAttraction => typeAttraction;
+
+        [Obsolete] // PAS ENCORE FAIT... SERA POTENTIELLEMENT INUTILE!.
+        public string TypeAttractionTitre(char typeAttraction)
+        {
+            switch (typeAttraction)
+            {
+                case 'S':
+                    
+                    break;
+                case 'I':
+                    
+                    break;
+                case 'F':
+                    
+                    break;
+                case 'T':
+                    
+                    break;
+                case 'M':
+                    
+                    break;
+                case 'R':
+
+                    break;
+                default:
+                    // code block
+                    break;
+            }
+
+            return "";
+        } 
     }
 }

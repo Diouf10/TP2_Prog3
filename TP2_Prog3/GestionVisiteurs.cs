@@ -1,29 +1,43 @@
-﻿
-
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="GestionVisiteurs.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace TP2_Prog3
 {
     /*
-     * Pour les files d'attente propres à chaque Attractions
-     * je crois qu'il nous faudrait un dictionnary OU une hashtable
+     * 1 - La file d'attente devrait utiliser la structure de donnée (Queue<Visiteur>).
+     * Les files d'attentes, elles, devraient être conservés dans des Queues (premier arrivé, premier sorti.)
+     * puisqu'on ne veux qu'accéder/retirer à la tête et ajouter à la queue,
+     * l'accès sera donc très efficace pour ce que nous voulons.
+     * De plus, le "array resizing" est aussi rare que dans la liste puisque la capacité double, en plus
+     * que l'organisation se refait à chaque fois qu'un resize est déclanché afin d'économiser de l'espace mémoire.
+
+     * 2 - Pour gérer que chaque attraction puisse avoir ses visiteurs, les meilleures options seraient
+     * le Dictionnary et la HashTable, puisqu'ils nous permettemt d'accéder rapidement à un élément à l'aide dune clé.
+     * Le dictionnary serait le plus facile à utiliser puisqu'il est fortement typé, facilitant beaucoup le codage et la gestion
+     * des types face à la HashTable, qui peut contenir pratiquement n'importe quoi. De plus, nous n'avons pas d'informations 
+     * personnelles ou importantes à propos de quiconque, donc la sécurité n'est pas le plus important. Aussi, grâce au système de clé, 
+     * l'acquisition d'une file en particulier est beaucoup plus rapide que si nous avions essayé avec un Array de Queue<Visiteur>...
      *
-     * 1 - À l'aide du ID de l'attraction, on pourrait accéder à la file. (Queue)
-     *
-     * Les files d'attentes, elles, devraient être
-     * conservés dans une Queue (premier arrivé, premier sorti.)
-     *
-     * Pour Gérer que chaque attraction puisse avoir ses visiteurs je crois qu'il
-     * faut utiliser un Dictionnary<ID,files d'attentes> on sera en mesure de gérer
-     * la files d'attente pour chaque attraction de manière distinctes.
+     * Initialement, pour chaque "clé" potentielles, il n'y aura pas de file, mais lorsqu'on essaie d'ajouter des personnes à une
+     * file qui n'a pas encore été ajoutée au dictionnaire, une nouvelle instance de Queue<Visiteur> sera imémédiatement créée 
+     * et sera inséré dans le dictionnaire avec le ID de l'attraction comme clé.
+
+     * 3 - Pour la gestion des visiteurs, nous avons choisi la LinkedList<>. Alors que, face à un Array, la LinkedList est
+     * la moins efficace des structures de données dans le domaine de l'accès, celle-ci n'aura pas besoin d'accès direct par
+     * index, donc son point négatif majeur est annulé. Aussi, la LinkedList est très puissante en matière
+     * d'ajout et de retrait d'éléments, ce qui arrivera souvent car il y aura souvent des visiteurs qui
+     * entrent et sortent du parc. Alors que l'Array ou la List auraient dû faire plusieurs (surtout l'Array) resize...
+     * ralentissant massivement l'application...
      */
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class GestionVisiteurs
     {
         // Quelle structure de donnée serait adéquate pour avoir la liste des visiteurs?
         private List<Visiteur> _visiteurs;
-
 
         //Commentaires à faire, dis moi si les tructure de données choisi sint bonnes ???
         private Dictionary<string, Queue<Visiteur>> _filesAttente;
@@ -31,6 +45,11 @@ namespace TP2_Prog3
 
         public GestionVisiteurs(Parc Parc)
         {
+            if (Parc is null)
+            {
+                throw new ArgumentNullException(nameof(Parc));
+            }
+
             _parc = Parc;
 
             _visiteurs = new List<Visiteur>();
@@ -38,31 +57,49 @@ namespace TP2_Prog3
             _filesAttente = new Dictionary<string, Queue<Visiteur>>();
         }
 
-        [Obsolete] // à enlever éventuellemenjt
-        public Queue<Visiteur> getFile(string id)
-        {
-            Queue<Visiteur> file = _filesAttente.GetValueOrDefault(id);
-            return file;
-        }
+        /// <summary>
+        /// Getter qui obtient la liste des visiteurs, mais une version clonée en array.
+        /// </summary>
+        public Visiteur[] Visiteurs => _visiteurs.ToArray();
 
-        public int getQueueLength(string id)
-        {
-            Queue<Visiteur> file = _filesAttente.GetValueOrDefault(id);
 
-            if (file != null) 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int GetQueueCount(string id)
+        {
+            Queue<Visiteur>? file = _filesAttente.GetValueOrDefault(id);
+
+            if (file is not null)
             {
                 return file.Count;
             }
             else
             {
                 return -1; // laisse à -1 pour le moment, ça aide à mieux comprendre comment le code fonctionne. TODO!!!
+                // j'ai volontairement mis le code pas beau pour que styleCop force l'un de nous à réviser ce code et change le -1 pour un 0..
+                // à retirer lorsque terminé 
             }
         }
 
-        public List<Visiteur> Visiteurs => _visiteurs;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="attractionId"></param>
+        /// <param name="visiteur"></param>
         public void EntrerVisiteurDansFileAttente(string attractionId, Visiteur visiteur)
         {
+            if (attractionId is null)
+            {
+                throw new ArgumentNullException(nameof(attractionId));
+            }
+
+            if (visiteur is null)
+            {
+                throw new ArgumentNullException(nameof(visiteur));
+            }
 
             if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null) // n
             {
@@ -70,32 +107,60 @@ namespace TP2_Prog3
             }
             else
             {
-                _filesAttente.Add(attractionId, new Queue<Visiteur>()); // 1
+                Queue<Visiteur> file = new Queue<Visiteur>();
 
-                _filesAttente.GetValueOrDefault(attractionId).Enqueue(visiteur); // 1 ou n
+                file.Enqueue(visiteur);
+
+                _filesAttente.Add(attractionId, file); // 1
             }
 
-            visiteur.AjouterElementDansHistorique($"Entrer dans la file d'attente de l'attraction {attractionId}.");
+            visiteur.AjouterElementDansHistorique($"Entrée dans la file d'attente de l'attraction {attractionId}.");
         }
 
+        /// <summary>
+        /// Cette méthode permet d'ajouter un visiteur dans l'attraction, ce qui le retire de la file d'attente de celle-ci.
+        /// </summary>
+        /// <param name="attractionId"> L'ID de l'attraction en question. </param>
         public void EntrerVisiteurDansAttraction(string attractionId)
         {
+            if (attractionId is null)
+            {
+                throw new ArgumentNullException(nameof(attractionId));
+            }
+
             if (_filesAttente.ContainsKey(attractionId))
             {
-                Queue<Visiteur> fileAttente = _filesAttente.GetValueOrDefault(attractionId)!;
-                
-                fileAttente.Dequeue().AjouterElementDansHistorique($"Entrer dans l'attraction {attractionId}");
+                Queue<Visiteur> fileAttente = _filesAttente.GetValueOrDefault(attractionId) !;
 
+                if (fileAttente.Count == 0)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                fileAttente.Dequeue().AjouterElementDansHistorique($"Entrée dans l'attraction {attractionId}");
             }
-            
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visiteur"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void EntrerVisiteurDansParc(Visiteur visiteur)
         {
-            _visiteurs.Add(visiteur);
-            visiteur.AjouterElementDansHistorique("Entrer dans le parc.");
+            if (visiteur is null)
+            {
+                throw new ArgumentNullException(nameof(visiteur));
+            }
+
+            _visiteurs.Add(visiteur); // O(1) !
+            visiteur.AjouterElementDansHistorique("Entrée dans le parc.");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="visiteur"></param>
         public void SortirVisiteurDuParc(Visiteur visiteur)
         {
             _visiteurs.Remove(visiteur); // O(n) !!!
@@ -105,4 +170,3 @@ namespace TP2_Prog3
 
     }
 }  
-            

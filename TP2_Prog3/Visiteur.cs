@@ -1,35 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright name="Mouhammad W. Diouf et Alexandre Lavoie" file="Visiteur.cs" company="TP2">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+    
 
 namespace TP2_Prog3
 {
+    /*
+    * Pour l'historique des visiteurs, nous avons choisi d'utiliser une StringBuilder
+    *
+    * 1 - La première raison pourquoi la StringBuilder serait l'ajout idéal est le fait que nous pouvons 
+    * pas vraiment le modifier... Les seules choses qu'on peut faire sont la convertion en string (à la fin!)
+    * et l'ajout vers la fin. Donc ses méthodes font déjà pas mal toute la job.
+    *
+    * 2 - Modifier une string (avec concaténation à l'aide de variables) prendrait trop de temps puisqu'à chaque fois
+    * que nous "modifions" la string, il est en fait en train d'en créer une tout nouvelle 
+    * comme avec un array de caractères...
+    * La StringBuilder, elle, fonctionne plus comme une List<char>, cependant, elle double toujours sa capacité
+    * afin d'éviter les manoeuvres de dupplication inutiles.
+    *
+    * 3 - En gros, quand on voudrait voir l'historique, on pourrait tout simplement recevoir la StringBuilder,
+    * lui appliquer un ToString() et boum! Un seul Console.WriteLine(pour tout le texte!); 
+    * (- Alex : Par expérience, une succession de WriteLine() est beaucoup plus lente qu'un builder,
+    *      voire la concaténation de strings)
+
+    * Note : Puisque le message d'entrée d'entrée est normalement toujours le même,
+    */
+
+    using System.Text;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class Visiteur
     {
-        /*
-         * À mon avis, l'historique devrait être conservé dans une List<string>
-         * 
-         * (explication à faire Alex.)
-         * 
-         * - Alexandre Lavoie
-         */
-
         /// <summary>
-        /// Le nom du visiteur
+        /// Le nom du visiteur.
         /// </summary>
         private string _nom;
 
-        private List<string> _historique;
+        private StringBuilder _historique;
 
         /// <summary>
-        /// Constructeur de la classe Visiteur
+        /// Constructeur de la classe Visiteur.
         /// </summary>
-        /// <param name="Nom">Le nom du visiteur</param>
+        /// <param name="Nom"> Le nom du visiteur. </param>
         public Visiteur(string Nom)
         {
-            _historique = new List<string>();
+            _historique = new StringBuilder();
             _nom = Nom;
         }
 
@@ -38,7 +56,10 @@ namespace TP2_Prog3
         /// </summary>
         public string Nom => _nom;
 
-        public string[] Historique => _historique.ToArray();
+        /// <summary>
+        /// Getter qui retourne la string de l'historique convertie du StringBuilder.
+        /// </summary>
+        public string Historique => _historique.ToString();
 
 
         /// <summary>
@@ -47,7 +68,7 @@ namespace TP2_Prog3
         /// <param name="action"></param>
         public void AjouterElementDansHistorique(string action)
         {
-            _historique.Add(action);
+            _historique.Append(action);
         }
 
         
@@ -56,7 +77,7 @@ namespace TP2_Prog3
         /// </summary>        
         public void ViderHistorique()
         {
-            _historique.Clear();
+            _historique = new StringBuilder();
         }
     }
 }
