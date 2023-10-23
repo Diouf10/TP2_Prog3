@@ -80,18 +80,15 @@ namespace TP2_Prog3
             {
                 Attraction attraction = kvp.Value;
 
-                if (attraction is not null)
-                {
-                    int nbVisiteursDansFile = gestionVisiteurs.GetQueueCount(kvp.Key);
+                int nbVisiteursDansFile = gestionVisiteurs.GetQueueCount(kvp.Key);
 
-                    Console.ForegroundColor = GetCouleurFile(nbVisiteursDansFile, attraction, parc);
-                    Console.Write("  ●  ");
-                    Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = GetCouleurFile(nbVisiteursDansFile, attraction, parc);
+                Console.Write("  ●  ");
+                Console.ForegroundColor = ConsoleColor.White;
 
                     // MAP LIGNE 127 EST LA RAISON PK LES ATTRACTIONS SE NOMMENT PLACEHOLDER POUR LE MOMENT...
-                    Console.WriteLine(
+                Console.WriteLine(
                         $"{attraction.ID,5} {attraction.Nom,15} ({attraction.TypeAttraction}) \t\t {nbVisiteursDansFile,2} / {attraction.Capacity,-2}");
-                }
             }
 
             Console.WriteLine("\n");

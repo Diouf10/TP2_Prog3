@@ -37,6 +37,7 @@ namespace TP2_Prog3
             TestSortirVisiteur(visiteur4);
             TestSortirVisiteur(visiteur2);
             TestSortirVisiteur(visiteur1);
+
             AffichageConsole.AfficherHistoriqueVisiteur(visiteur1);
         }
 
@@ -61,7 +62,7 @@ namespace TP2_Prog3
         }
 
         /// <summary>
-        /// Test qui permet de faire sirtir un visteur du parc.
+        /// Test qui permet de faire sortir un visiteur du parc.
         /// </summary>
         /// <param name="visiteur">visiteur qui veut sortir du parc.</param>
         private static void TestSortirVisiteur(Visiteur visiteur)

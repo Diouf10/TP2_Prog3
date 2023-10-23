@@ -5,7 +5,7 @@
 namespace TP2_Prog3;
 /*
  * 1 - La file d'attente devrait utiliser la structure de donnée (Queue<Visiteur>).
- * Les files d'attentes, elles, devraient être conservés dans des Queues (premier arrivé, premier sorti.)
+ * Les files d'attentes, elles, devraient être conservés dans des Queues (premier arrivé, premier sorti.)(FIFO)
  * puisqu'on ne veux qu'accéder/retirer à la tête et ajouter à la queue,
  * l'accès sera donc très efficace pour ce que nous voulons.
  * De plus, le "array resizing" est aussi rare que dans la liste puisque la capacité double, en plus
@@ -105,9 +105,9 @@ public class GestionVisiteurs
             throw new ArgumentNullException(nameof(visiteur));
         }
 
-        if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null) // O(n)
+        if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null)
         {
-            _filesAttente.GetValueOrDefault(attractionId) !.Enqueue(visiteur); // O(1) ou O(n)
+            _filesAttente.GetValueOrDefault(attractionId) !.Enqueue(visiteur);
         }
         else
         {

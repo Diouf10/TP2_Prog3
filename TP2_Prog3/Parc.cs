@@ -6,12 +6,18 @@ namespace TP2_Prog3
 {
     /*
     * Pour la liste d'attractions, le dictionnary semble être un bon choix : Grâce à la clé, c'est à dire
-    * l'ID de l'attraction, nous pouvons facilement être // Finis-le stp <-- afse  sji erjds  ies js s sefi siu sefsi si isefisefiueshuif sui fseuif huise fhsui si
+    * l'ID de l'attraction, nous pouvons facilement liée la clé avec l'attraction associée, ce qui faciliterait
+    * la recherche d'une attraction pusiqu'une attraction est unique est associée avec une clé unique (l'id de l'attraction).
+    *
     * Pour la "liste" d'attractions, la Hash Table semblerait être un bon choix :
-         
-    *      
+    *
+    * Le Dictionary augmente la taille du Hash Table en fonction du nombre d'éléments stockés dans le tableau
+    * afin de limiter les collisions.
+    *
+    *
+    *
     * Bonus - La générécité faciliterait beaucoup le codage de la classe.
-    * 
+    *
     * - TODO!!!
 
     */
@@ -19,7 +25,6 @@ namespace TP2_Prog3
     using System;
     using System.Collections.Generic;
     using System.Text;
-
 
     /// <summary>
     /// La classe du parc permet de conserver les données du parc.
@@ -52,7 +57,6 @@ namespace TP2_Prog3
 
                 i += 2;
 
-
                 StringBuilder nom = new ();
 
                 for (; i < line.Length && line[i] != ';'; i++)
@@ -71,9 +75,7 @@ namespace TP2_Prog3
                 }
 
                 Attraction attraction = new Attraction(
-
                     id.ToString(), nom.ToString(), Convert.ToInt32(strCapacity.ToString()), type);
-
                 _attractions.Add(id.ToString(), attraction);
             }
         }
@@ -90,7 +92,14 @@ namespace TP2_Prog3
         /// <returns>Retourne l'attraction selon son id.</returns>
         public Attraction GetAttraction(string id)
         {
-            return _attractions.GetValueOrDefault(id) ?? throw new InvalidOperationException();
+            if (_attractions.TryGetValue(id, out Attraction? attraction))
+            {
+                return attraction;
+            }
+            else
+            {
+                throw new KeyNotFoundException($"L'Attraction avec le ID {id}, n'a pas été trouvé!");
+            }
         }
 
         /// <summary>
@@ -101,14 +110,7 @@ namespace TP2_Prog3
         public int GetAttractionCapacity(string id)
         {
             Attraction attraction = GetAttraction(id);
-            if (attraction is null)
-            {
-                return 0;
-            }
-
             return attraction.Capacity;
         }
-
-
     }
 }
