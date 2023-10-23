@@ -9,13 +9,6 @@ namespace TP2_Prog3
     /// </summary>
     public class Attraction
     {
-        private string id;
-        private string nom;
-
-        private int capacity;
-
-        private char typeAttraction;
-
         private static Dictionary<char, string> dictionnaireAttractions = new Dictionary<char, string>()
         {
             { 'S', "Sensation Forte" },
@@ -25,6 +18,13 @@ namespace TP2_Prog3
             { 'M', "Magasin" },
             { 'R', "Restaurant" },
         };
+
+        private string id;
+        private string nom;
+
+        private int capacity;
+
+        private char typeAttraction;
 
         // Mouhammad : oui  Je pense que c'est un dictionnary !!!!
         // ex: <char symbole, string typeAttraction>
@@ -72,41 +72,5 @@ namespace TP2_Prog3
         /// Getter qui retourne le type d'attraction de la présente attraction.
         /// </summary>
         public char TypeAttraction => typeAttraction;
-
-        /// <summary>
-        /// Permet d'obtenir le titre de l'attraction selon son type d'attarction.
-        /// </summary>
-        /// <param name="typesAttraction">le type d'attraction d'une attarction.</param>
-        /// <returns>Retourne le titre de l'attraction.</returns>
-        [Obsolete] // PAS ENCORE FAIT... SERA POTENTIELLEMENT INUTILE!.
-        public string TypeAttractionTitre(char typesAttraction)
-        {
-            switch (typesAttraction)
-            {
-                case 'S':
-
-                    break;
-                case 'I':
-
-                    break;
-                case 'F':
-
-                    break;
-                case 'T':
-
-                    break;
-                case 'M':
-
-                    break;
-                case 'R':
-
-                    break;
-                default:
-                    // code block
-                    break;
-            }
-
-            return string.Empty;
-        }
     }
 }

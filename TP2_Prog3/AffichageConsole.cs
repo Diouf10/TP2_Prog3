@@ -52,7 +52,6 @@ namespace TP2_Prog3
 
                         string id = map.Attractions[y - 1, x - 1] !.ID; // can't be null. Cince already checked above
 
-
                         Attraction attraction = parc.Attractions.GetValueOrDefault(id) !;
                         int nbVisiteursDansFile = gestionVisiteurs.GetQueueCount(id);
 
@@ -108,7 +107,7 @@ namespace TP2_Prog3
 
             // Une seule addition de string variable ne devrait pas être la fin du monde,
             //      un nouvel array créé qu'une seule fois.
-            Console.WriteLine($"### {visiteur.Nom} ###" + historique);
+            Console.WriteLine($"### {visiteur.Nom} ###\n" + historique);
         }
 
         /// <summary>

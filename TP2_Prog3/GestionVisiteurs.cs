@@ -81,7 +81,7 @@ public class GestionVisiteurs
         }
         else
         {
-            return -1; // laisse à -1 pour le moment, ça aide à mieux comprendre comment le code fonctionne.
+            return 0;
 
             // j'ai volontairement mis le code pas beau pour que styleCop force l'un de nous à réviser ce code et change le -1 pour un 0..
             // à retirer lorsque terminé
@@ -105,9 +105,9 @@ public class GestionVisiteurs
             throw new ArgumentNullException(nameof(visiteur));
         }
 
-        if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null) // n
+        if (_parc.Attractions.ContainsKey(attractionId) && _filesAttente.GetValueOrDefault(attractionId) != null) // O(n)
         {
-            _filesAttente.GetValueOrDefault(attractionId) !.Enqueue(visiteur); // 1 ou n
+            _filesAttente.GetValueOrDefault(attractionId) !.Enqueue(visiteur); // O(1) ou O(n)
         }
         else
         {
@@ -118,7 +118,7 @@ public class GestionVisiteurs
             _filesAttente.Add(attractionId, file); // 1
         }
 
-        visiteur.AjouterElementDansHistorique($"Entrée dans la file d'attente de l'attraction {attractionId}.");
+        visiteur.AjouterElementDansHistorique($"- Entrée dans la file d'attente de l'attraction {attractionId}.");
     }
 
     /// <summary>
@@ -141,7 +141,7 @@ public class GestionVisiteurs
                 throw new InvalidOperationException();
             }
 
-            fileAttente.Dequeue().AjouterElementDansHistorique($"Entrée dans l'attraction {attractionId}");
+            fileAttente.Dequeue().AjouterElementDansHistorique($"- Entrée dans l'attraction {attractionId}");
         }
     }
 
@@ -158,7 +158,7 @@ public class GestionVisiteurs
         }
 
         _visiteurs.Add(visiteur); // O(1) !
-        visiteur.AjouterElementDansHistorique("Entrée dans le parc.");
+        visiteur.AjouterElementDansHistorique("- Entrée dans le parc.");
     }
 
     /// <summary>
@@ -169,6 +169,6 @@ public class GestionVisiteurs
     {
         _visiteurs.Remove(visiteur); // O(n) !!!
 
-        visiteur.AjouterElementDansHistorique("Sortie du parc.");
+        visiteur.AjouterElementDansHistorique("- Sortie du parc.");
     }
 }

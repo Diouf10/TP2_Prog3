@@ -65,7 +65,7 @@ namespace TP2_Prog3
         /// <param name="action">une action qui est fait pour un visiteur.</param>
         public void AjouterElementDansHistorique(string action)
         {
-            _historique.Append(action);
+            _historique.Append(action + "\n");
         }
 
         /// <summary>
