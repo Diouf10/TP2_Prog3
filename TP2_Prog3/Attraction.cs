@@ -3,15 +3,18 @@
 // </copyright>
 
 /*
-   * Pour la liste d'attractions, le dictionnary semble être un bon choix : Grâce à la clé, c'est à dire
+   * Pour les types d'attractions, le dictionnary semble être un bon choix : Grâce à la clé, c'est à dire
    * l'ID de l'attraction, nous pouvons facilement liée la clé avec l'attraction associée, ce qui faciliterait
    * la recherche d'une attraction pusiqu'une attraction est unique est associée avec une clé unique (l'id de l'attraction).
+   *
+   * Et puis si jamais nous étions amené à présenté le titre de l'attraction elle serait déjà disponible dans
+   * le dictionnaire d'attractions.
    */
 
 namespace TP2_Prog3
 {
     /// <summary>
-    /// Classe Attraction permet de conserver les données d'una attraction.
+    /// Classe Attraction permet de conserver les données d'une attraction.
     /// </summary>
     public class Attraction
     {
