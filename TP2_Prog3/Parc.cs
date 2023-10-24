@@ -14,6 +14,7 @@ namespace TP2_Prog3
     * pas le nombre de modifications qui sera fait à l'avance. Le string builder sera efficace en ce sens car
     * il conserve un tampon pour accueillir les ajouts.
     *
+    * - Mouhammad Wagan Diouf et Alexandre Lavoie
     */
 
     using System;

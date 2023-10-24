@@ -13,7 +13,8 @@ namespace TP2_Prog3
    * une baisse significative des performances, car à chaque modification une nouvelle string est créer. la
    * modification répétée peut entraîner une baisse significative des performances.compartivement au String
    * builder qui va atténué cette baisse de performances.
-   *
+   * 
+   * - Mouhammad Wagan Diouf
    */
     using System.Text;
 

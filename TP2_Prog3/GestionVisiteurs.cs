@@ -14,7 +14,7 @@ namespace TP2_Prog3;
  * 2 - Pour gérer que chaque attraction puisse avoir ses visiteurs, les meilleures options seraient
  * le Dictionnary et la HashTable, puisqu'ils nous permettent d'accéder rapidement à un élément à l'aide dune clé.
  * Le dictionnary serait le plus facile à utiliser puisqu'il est fortement typé, facilitant beaucoup le codage et la gestion
- * des types face à la HashTable, qui peut contenir pratiquement n'importe quoi. De plus, nous n'avons pas d'informations
+ * des types face à la HashTable, qui peut contenir "n'importe quoi". De plus, nous n'avons pas d'informations
  * personnelles ou importantes à propos de quiconque, donc la sécurité n'est pas le plus important. Aussi, grâce au système de clé,
  * l'acquisition d'une file en particulier est beaucoup plus rapide que si nous avions essayé avec un Array de Queue<Visiteur>...
  *
@@ -28,6 +28,8 @@ namespace TP2_Prog3;
  * d'ajout et de retrait d'éléments, ce qui arrivera souvent car il y aura souvent des visiteurs qui
  * entrent et sortent du parc. Alors que l'Array ou la List auraient dû faire plusieurs (surtout l'Array) resize...
  * ralentissant massivement l'application...
+ * 
+ * - Alexandre Lavoie
  */
 
 /// <summary>
