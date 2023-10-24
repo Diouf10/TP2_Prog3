@@ -5,7 +5,7 @@
 namespace TP2_Prog3
 {
     /*
-   * Pour Afficher le texte sur la console nous avons décidé d'utiliser le string builder, car
+   * Pour Afficher le texte sur la console nous avons décidé d'utiliser le string builder,
    * car il se pourrait que des textes de la console qui change selon le contexte et dont on ne connait
    * pas le nombre de modifications qui sera fait à l'avance. Le string builder sera efficace en ce sens car
    * il conserve un tampon pour accueillir les ajouts. Parce que si on prend l'exemple du String, celui-ci

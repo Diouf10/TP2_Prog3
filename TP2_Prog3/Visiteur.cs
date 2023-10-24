@@ -19,8 +19,8 @@ namespace TP2_Prog3
     *
     * 3 - En gros, quand on voudrait voir l'historique, on pourrait tout simplement recevoir la StringBuilder,
     * lui appliquer un ToString() et boum! Un seul Console.WriteLine(pour tout le texte!);
-    * (- Alex : Par expérience, une succession de WriteLine() est beaucoup plus lente qu'un builder,
-    *      voire la concaténation de strings)
+    * (- Alex : Par expérience, une succession de WriteLine() ou une succession de concaténation de strings avec variables
+    * est beaucoup plus lente qu'un builder)
 
     * Note : Puisque le message d'entrée d'entrée est normalement toujours le même,
     */

@@ -9,12 +9,7 @@ namespace TP2_Prog3
     * l'ID de l'attraction, nous pouvons facilement liée la clé avec l'attraction associée, ce qui faciliterait
     * la recherche d'une attraction pusiqu'une attraction est unique est associée avec une clé unique (l'id de l'attraction).
     *
-    * Pour la "liste" d'attractions, la Hash Table semblerait être un bon choix :
-    *
-    * Le Dictionary augmente la taille du Hash Table en fonction du nombre d'éléments stockés dans le tableau
-    * afin de limiter les collisions.
-    *
-    * Pour le texte (les lignes à écrire), nous avons décidé d'utiliser le string builder, car
+    * Pour l'import des attractions, (les lignes à écrire), nous avons décidé d'utiliser le string builder, car
     * car il se pourrait que des textes de la console qui change selon le contexte et dont on ne connait
     * pas le nombre de modifications qui sera fait à l'avance. Le string builder sera efficace en ce sens car
     * il conserve un tampon pour accueillir les ajouts.
@@ -30,7 +25,7 @@ namespace TP2_Prog3
     /// </summary>
     public class Parc
     {
-        private Dictionary<string, Attraction> _attractions = new Dictionary<string, Attraction>();
+        private readonly Dictionary<string, Attraction> _attractions = new Dictionary<string, Attraction>();
 
         /// <summary>
         /// Constructeur du Parc.
@@ -43,7 +38,7 @@ namespace TP2_Prog3
             {
                 int i = 0;
 
-                StringBuilder id = new ();
+                StringBuilder id = new (5); // le ID fait généralement 5 caractères.
 
                 for (; i < line.Length && line[i] != ';'; i++)
                 {
