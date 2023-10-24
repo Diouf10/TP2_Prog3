@@ -16,9 +16,9 @@ namespace TP2_Prog3
     *
     * - Mouhammad Wagan Diouf et Alexandre Lavoie
     */
-
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
 
     /// <summary>

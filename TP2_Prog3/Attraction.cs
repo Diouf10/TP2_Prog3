@@ -2,7 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-/*
+namespace TP2_Prog3
+{
+    /*
    * Pour les types d'attractions, le dictionnary semble être un bon choix : Grâce à la clé, c'est à dire
    * l'ID de l'attraction, nous pouvons facilement liée la clé avec l'attraction associée, ce qui faciliterait
    * la recherche d'une attraction pusiqu'une attraction est unique est associée avec une clé unique (l'id de l'attraction).
@@ -13,8 +15,9 @@
    * - Mouhammad Wagan Diouf
    */
 
-namespace TP2_Prog3
-{
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Classe Attraction permet de conserver les données d'une attraction.
     /// </summary>

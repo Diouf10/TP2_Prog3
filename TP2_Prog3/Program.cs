@@ -4,6 +4,8 @@
 
 namespace TP2_Prog3
 {
+    using System.Threading;
+
     /// <summary>
     /// Le programme qui roule...
     /// </summary>

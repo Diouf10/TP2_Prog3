@@ -31,6 +31,8 @@ namespace TP2_Prog3;
  *
  * - Alexandre Lavoie
  */
+using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// La classe de gestion visiteru permet de gérer les visteurs du parc.

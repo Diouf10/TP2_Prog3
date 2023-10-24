@@ -4,6 +4,8 @@
 
 namespace TP2_Prog3
 {
+    using System;
+    using System.Collections.Generic;
     /*
    * Pour Afficher le texte sur la console nous avons décidé d'utiliser le string builder,
    * car il se pourrait que des textes de la console qui change selon le contexte et dont on ne connait
