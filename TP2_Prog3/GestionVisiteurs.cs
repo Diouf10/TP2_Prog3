@@ -28,7 +28,7 @@ namespace TP2_Prog3;
  * d'ajout et de retrait d'éléments, ce qui arrivera souvent car il y aura souvent des visiteurs qui
  * entrent et sortent du parc. Alors que l'Array ou la List auraient dû faire plusieurs (surtout l'Array) resize...
  * ralentissant massivement l'application...
- * 
+ *
  * - Alexandre Lavoie
  */
 

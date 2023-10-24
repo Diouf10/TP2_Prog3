@@ -9,6 +9,8 @@
    *
    * Et puis si jamais nous étions amené à présenté le titre de l'attraction elle serait déjà disponible dans
    * le dictionnaire d'attractions.
+   *
+   * - Mouhammad Wagan Diouf
    */
 
 namespace TP2_Prog3
